@@ -1,4 +1,5 @@
-.App {
+/*.App {
+
   text-align: center;
 }
 
@@ -16,6 +17,7 @@
 .App-link {
   color: #61dafb;
 }
+*/
 
 .body {
   margin: 0 auto;
@@ -36,7 +38,7 @@
 .content-columns {
   display: flex;
 }
-/* ---- oef Content-Columns ---- */
+/* ---- eof Content-Columns ---- */
 
 /* Header */
 .header {
@@ -57,6 +59,7 @@
 
 /* Sidebar */
 .sidebar {
+  margin-top: 10px;
   padding: 20px;
   width: 20%;
 }
@@ -114,9 +117,17 @@
 }
 
 .todolist-text {
-  margin: 18px 10px;
+  margin: 18px 0px;
   padding-left: 2px;
   line-height: 1;
+}
+
+.todoitem {
+  border: 1px solid;
+  margin: 5px 0;
+  padding: 5px 5px;
+  word-wrap: break-word;
+  max-width: max-content;
 }
 /* ---- eof Main ---- */
 

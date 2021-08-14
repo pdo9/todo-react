@@ -3,8 +3,9 @@ import './App.css';
 import TodoList from './components/TodoList';
 import FooterBase from './components/base/FooterBase';
 import HeaderBase from './components/base/HeaderBase';
+import SidebarBase from './components/base/SidebarBase';
 
-function App() {
+export default function App() {
   return (
     <div className='page'>
       {/* Header */}
@@ -13,29 +14,12 @@ function App() {
       {/* Columns */}
       <div className='content-columns'>
         {/* Sidebar */}
-        <aside className='sidebar'>
-          <nav className='nav'>
-            <a className='nav-link' href='#'>
-              На главную
-            </a>
-            <a className='nav-link' href='#'>
-              Мои списки
-            </a>
-            <a className='nav-link' href='#'>
-              Пользователь
-            </a>
-            <a className='nav-link' href='#'>
-              Выход
-            </a>
-          </nav>
-        </aside>
+        <SidebarBase />
 
         {/* Main */}
         <main className='main'>
           <div className='main-content'>
             <div className='main-text'>
-              <p>This is todo-application prototype. Work in progress.</p>
-
               {/* Form */}
               <div className='form-division'>
                 <form
@@ -66,8 +50,8 @@ function App() {
 
               {/* TODO List */}
               <div name='todolist-text' className='todolist-text'>
-                <p>Мой список дел:</p>
-                <TodoList></TodoList>
+                <p>Мои заметки:</p>
+                <TodoList todoList={getTodoList()}></TodoList>
               </div>
             </div>
           </div>
@@ -80,4 +64,14 @@ function App() {
   );
 }
 
-export default App;
+function getTodoList() {
+  let todoList = [
+    { todoItemID: 1, todoItemStatus: true, todoItemText: 'note1' },
+    { todoItemID: 2, todoItemStatus: true, todoItemText: 'note2' },
+    { todoItemID: 3, todoItemStatus: true, todoItemText: 'note3' },
+    { todoItemID: 4, todoItemStatus: true, todoItemText: 'note4' },
+    { todoItemID: 5, todoItemStatus: true, todoItemText: 'note5' },
+  ];
+
+  return todoList;
+}
