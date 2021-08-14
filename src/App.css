@@ -1,0 +1,139 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.body {
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 15px; */
+  line-height: 1.5;
+  color: #121212;
+}
+
+/* Page */
+.page {
+  width: 800px;
+  margin: 20px auto;
+}
+/* ---- eof Page*/
+
+/* Content-Columns */
+.content-columns {
+  display: flex;
+}
+/* ---- oef Content-Columns ---- */
+
+/* Header */
+.header {
+  padding: 5px;
+  background-color: #121212;
+}
+
+.header-content {
+  margin: 0;
+  font-size: 24px;
+}
+
+.header-text {
+  color: dodgerblue;
+  text-align: center;
+}
+/* ---- eof Header ---- */
+
+/* Sidebar */
+.sidebar {
+  padding: 20px;
+  width: 20%;
+}
+/* ---- oef Sidebar ---- */
+
+/* Navigation */
+.nav {
+  text-align: left;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #121212;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  background-color: gainsboro;
+}
+/* ---- oef Navigation ---- */
+
+/* Main */
+.main {
+  padding: 10px;
+  width: auto;
+}
+
+.main-content {
+  margin: 0;
+}
+
+.main-text {
+  font-size: 20px;
+}
+
+.main-form {
+  padding: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-input {
+  display: block;
+  margin: 10px 0;
+  width: 240px;
+  height: 24px;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.form-button {
+  margin: 10px 0;
+  padding: 10px 20px;
+}
+
+.todolist-text {
+  margin: 18px 10px;
+  padding-left: 2px;
+  line-height: 1;
+}
+/* ---- eof Main ---- */
+
+/* Footer */
+.footer {
+  margin: 0;
+}
+
+.footer-content {
+  background-color: #121212;
+}
+
+.footer-text {
+  text-align: center;
+  padding: 20px;
+  color: dodgerblue;
+}
+/* ---- eof Footer ---- */
+
+/* eof */
