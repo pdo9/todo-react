@@ -122,13 +122,13 @@
   line-height: 1;
 }
 
-.todoItemContainer {
+.todo-item-container {
   display: flex;
   align-items: center;
   justify-content: left;
 }
 
-.todoitem {
+.todo-item {
   border: 1px solid;
   margin: 5px 0;
   padding: 5px 5px;

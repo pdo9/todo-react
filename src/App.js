@@ -28,8 +28,8 @@ function App() {
               {/* Form */}
               <div className='form-division'>
                 <form
-                  action='#'
-                  method='post'
+                  //action='#'
+                  //method='post'
                   name='main-form'
                   className='main-form'
                 >

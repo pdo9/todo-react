@@ -1,12 +1,15 @@
 import React from 'react';
 
-export default function TodoItem(props, onChange) {
+export default function TodoItem(props) {
   return (
-    <div className='todoItemContainer'>
+    <div className='todo-item-container'>
       <span>
-        <input type='checkBox' onChange={() => onChange(props.todoItem.id)} />
+        <input
+          type='checkBox'
+          onChange={() => props.onChange(props.todoItem.id)}
+        />
       </span>
-      <li className='todoitem'>{getTodoItemText(props)}</li>
+      <li className='todo-item'>{getTodoItemText(props)}</li>
       <button>&times;</button>
     </div>
   );
