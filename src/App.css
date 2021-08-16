@@ -118,8 +118,14 @@
 
 .todolist-text {
   margin: 18px 0px;
-  padding-left: 2px;
+  padding-inline-start: 0px;
   line-height: 1;
+}
+
+.todoItemContainer {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }
 
 .todoitem {
@@ -128,6 +134,8 @@
   padding: 5px 5px;
   word-wrap: break-word;
   max-width: max-content;
+  margin-left: 22px;
+  margin-right: 10px;
 }
 /* ---- eof Main ---- */
 

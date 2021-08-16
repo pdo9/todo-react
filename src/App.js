@@ -5,7 +5,12 @@ import FooterBase from './components/base/FooterBase';
 import HeaderBase from './components/base/HeaderBase';
 import SidebarBase from './components/base/SidebarBase';
 
-export default function App() {
+function App() {
+  //изменение статуса элемента todo
+  function changeTodoItemStatus(id) {
+    console.log(id);
+  }
+
   return (
     <div className='page'>
       {/* Header */}
@@ -42,6 +47,12 @@ export default function App() {
                     name='input_button'
                     id='input_button'
                     className='form-button'
+                    onClick={() =>
+                      addTodoItem(
+                        todoList,
+                        document.querySelector('#input_todo').value
+                      )
+                    }
                   >
                     Добавить
                   </button>
@@ -51,7 +62,10 @@ export default function App() {
               {/* TODO List */}
               <div name='todolist-text' className='todolist-text'>
                 <p>Мои заметки:</p>
-                <TodoList todoList={getTodoList()}></TodoList>
+                <TodoList
+                  todoList={todoList}
+                  onCheckBoxClick={changeTodoItemStatus}
+                ></TodoList>
               </div>
             </div>
           </div>
@@ -64,14 +78,30 @@ export default function App() {
   );
 }
 
+//получение списка todo
 function getTodoList() {
   let todoList = [
-    { todoItemID: 1, todoItemStatus: true, todoItemText: 'note1' },
-    { todoItemID: 2, todoItemStatus: true, todoItemText: 'note2' },
-    { todoItemID: 3, todoItemStatus: true, todoItemText: 'note3' },
-    { todoItemID: 4, todoItemStatus: true, todoItemText: 'note4' },
-    { todoItemID: 5, todoItemStatus: true, todoItemText: 'note5' },
+    { id: 1, isActive: true, text: 'note1' },
+    { id: 2, isActive: true, text: 'note2' },
+    { id: 3, isActive: true, text: 'note3' },
+    { id: 4, isActive: true, text: 'note4' },
+    { id: 5, isActive: true, text: 'note5' },
   ];
 
   return todoList;
 }
+
+let todoList = getTodoList();
+
+//добавление элемента в todo-список
+function addTodoItem(todoList, text) {
+  todoList[todoList.length] = {
+    id: todoList.length + 1,
+    isActive: true,
+    text: text,
+  };
+  console.log(text);
+  console.log(todoList);
+}
+
+export default App;
