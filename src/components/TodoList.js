@@ -2,9 +2,10 @@ import React from 'react';
 import TodoItem from './TodoItem';
 
 export default function TodoList(props) {
+  /*
   if (props.todoList) {
     return (
-      <ol className='.todolist-text'>
+      <ul>
         {props.todoList.map((todoItem) => {
           return (
             <TodoItem
@@ -14,7 +15,7 @@ export default function TodoList(props) {
             />
           );
         })}
-      </ol>
+      </ul>
     );
   } else {
     return (
@@ -23,4 +24,18 @@ export default function TodoList(props) {
       </span>
     );
   }
+  */
+  return (
+    <ul>
+      {props.todoList.map((todoItem) => {
+        return (
+          <TodoItem
+            todoItem={todoItem}
+            key={todoItem.id}
+            onChange={props.onCheckBoxClick}
+          />
+        );
+      })}
+    </ul>
+  );
 }

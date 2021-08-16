@@ -84,6 +84,8 @@
 /* ---- oef Navigation ---- */
 
 /* Main */
+
+/*
 .main {
   padding: 10px;
   width: auto;
@@ -96,6 +98,7 @@
 .main-text {
   font-size: 20px;
 }
+
 
 .main-form {
   padding: 5px;
@@ -115,7 +118,9 @@
   margin: 10px 0;
   padding: 10px 20px;
 }
+*/
 
+/*
 .todolist-text {
   margin: 18px 0px;
   padding-inline-start: 0px;
@@ -127,6 +132,7 @@
   align-items: center;
   justify-content: left;
 }
+*/
 
 .todo-item {
   border: 1px solid;
@@ -137,6 +143,19 @@
   margin-left: 22px;
   margin-right: 10px;
 }
+
+.todo-item-done {
+  border: 1px solid;
+  margin: 5px 0;
+  padding: 5px 5px;
+  word-wrap: break-word;
+  max-width: max-content;
+  margin-left: 22px;
+  margin-right: 10px;
+
+  text-decoration: line-through;
+}
+
 /* ---- eof Main ---- */
 
 /* Footer */
