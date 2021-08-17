@@ -5,6 +5,7 @@ import FooterBase from './components/base/FooterBase';
 import HeaderBase from './components/base/HeaderBase';
 import SidebarBase from './components/base/SidebarBase';
 import Context from './components/context';
+import TodoInpunt from './components/TodoInput';
 
 //let todoList = getTodoList();
 
@@ -25,7 +26,8 @@ function App() {
   }
 
   //добавление элемента в todo-список
-  function addTodoItem(todoList, text) {
+  function addTodoItem(text) {
+    /*
     todoList[todoList.length] = {
       id: todoList.length + 1,
       isActive: true,
@@ -33,6 +35,16 @@ function App() {
     };
     console.log(text);
     console.log(todoList);
+    */
+    setTodoListState(
+      todoList.concat([
+        {
+          id: todoList.length + 1,
+          isActive: true,
+          text: text,
+        },
+      ])
+    );
   }
 
   function removeTodoItem(id) {
@@ -75,55 +87,24 @@ function App() {
           {/* Main */}
           <main className='main'>
             <div className='main-content'>
-              <div className='main-text'>
-                {/* Form */}
-                <div className='form-division'>
-                  <form
-                    //action='#'
-                    //method='post'
-                    name='main-form'
-                    className='main-form'
-                  >
-                    <label htmlFor='input_todo' className='label_add_todo'>
-                      Добавить в список:
-                    </label>
-                    <input
-                      type='text'
-                      name='input_todo'
-                      id='input_todo'
-                      className='form-input'
-                    />
-                    <button
-                      type='submit'
-                      name='input_button'
-                      id='input_button'
-                      className='form-button'
-                      onClick={() =>
-                        addTodoItem(
-                          todoList,
-                          document.querySelector('#input_todo').value
-                        )
-                      }
-                    >
-                      Добавить
-                    </button>
-                  </form>
-                </div>
+              {/* Form */}
+              <div name='form-add-todo'>
+                <TodoInpunt onCreate={addTodoItem} />
+              </div>
 
-                {/* TODO List */}
-                <div name='todolist-text'>
-                  <p>Мои заметки:</p>
+              {/* TODO List */}
+              <div name='todolist-text'>
+                <p>Мои заметки:</p>
 
-                  {console.log('todoList.Length = ', todoList.length)}
-                  {todoList.length ? (
-                    <TodoList
-                      todoList={todoList}
-                      onCheckBoxClick={changeTodoItemStatus}
-                    ></TodoList>
-                  ) : (
-                    <p>У вас нет созданных заметок.</p>
-                  )}
-                </div>
+                {console.log('todoList.Length = ', todoList.length)}
+                {todoList.length ? (
+                  <TodoList
+                    todoList={todoList}
+                    onCheckBoxClick={changeTodoItemStatus}
+                  ></TodoList>
+                ) : (
+                  <p>У вас нет созданных заметок.</p>
+                )}
               </div>
             </div>
           </main>

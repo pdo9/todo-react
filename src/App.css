@@ -134,6 +134,10 @@
 }
 */
 
+.todo-input {
+  margin: 20px auto;
+}
+
 .todo-item {
   border: 1px solid;
   margin: 5px 0;
