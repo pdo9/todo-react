@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
-import FooterBase from './components/base/FooterBase';
-import HeaderBase from './components/base/HeaderBase';
-import SidebarBase from './components/base/SidebarBase';
+import FooterBase from './components/baseContent/FooterContent';
+import HeaderBase from './components/baseContent/HeaderContent';
+import SidebarBase from './components/baseContent/SidebarContent';
 import Context from './components/context';
 import TodoInpunt from './components/TodoInput';
+import { BrowserRouter, Rioute, Switch } from 'react-dom';
 
 //let todoList = getTodoList();
 
@@ -55,14 +56,6 @@ function App() {
   //изменение статуса элемента todo
   function changeTodoItemStatus(id) {
     console.log('todo id = ', id);
-    /*
-    todoList = todoList.map(() => {
-      if (todoList.id === id) {
-        todoList.isActive = !todoList.isActive;
-      }
-      return todoList;
-    });
-    */
     setTodoListState(
       todoList.map((todoItem) => {
         if (todoItem.id === id) {
