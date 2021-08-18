@@ -7,10 +7,10 @@ export default function SidebarBase() {
         <a className='nav-link' href='/'>
           На главную
         </a>
-        <a className='nav-link' href='/Login'>
+        <a className='nav-link' href='/login'>
           Авторизация
         </a>
-        <a className='nav-link' href='Logout'>
+        <a className='nav-link' href='/logout'>
           Выход
         </a>
       </nav>

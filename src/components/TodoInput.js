@@ -22,6 +22,7 @@ export default function TodoInpunt(props) {
       <input
         value={todoInputValue}
         onChange={(event) => setTodoInputValue(event.target.value)}
+        placeholder='Введите текст заметки'
       />
       <button type='submit' style={{ margin: '10px' }}>
         Добавить
