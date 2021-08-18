@@ -26,7 +26,7 @@ export default function TodoList(props) {
   }
   */
   return (
-    <ul>
+    <ul style={{ listStyle: 'none', padding: '0' }}>
       {props.todoList.map((todoItem) => {
         return (
           <TodoItem

@@ -11,7 +11,10 @@ export default function TodoItem(props) {
   let { removeTodoItem } = useContext(Context);
 
   return (
-    <li className={todoItemClassName}>
+    <li
+      className={todoItemClassName}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+    >
       <span>
         <input
           type='checkBox'
