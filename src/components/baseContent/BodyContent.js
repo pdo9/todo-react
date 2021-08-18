@@ -1,8 +1,10 @@
 import React from 'react';
 import Sidebar from './SidebarContent';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Login } from '../pages/login';
 import { Home } from '../pages/home';
+import { Login } from '../pages/login';
+import { Logout } from '../pages/logout';
+import AuthExample from '../pages/AuthExample';
 
 export default function BodyContent() {
   return (
@@ -14,12 +16,20 @@ export default function BodyContent() {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route path='/login'>
+            <Route path='/login' exact>
               <Login />
             </Route>
 
-            <Route path='/'>
+            <Route path='/' exact>
               <Home />
+            </Route>
+
+            <Route path='/logout' exact>
+              <Logout />
+            </Route>
+
+            <Route path='/auth' exact>
+              <AuthExample />
             </Route>
           </Switch>
         </BrowserRouter>
