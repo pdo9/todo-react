@@ -21,7 +21,7 @@ export default function TodoItem(props) {
           checked={!props.todoItem.isActive}
           onChange={() => props.onChange(props.todoItem.id)}
         />
-        {props.todoItem.id}
+        {/*{props.todoItem.id} */}
         &nbsp;
         {getTodoItemText(props)}
       </span>

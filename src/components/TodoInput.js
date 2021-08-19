@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function TodoInpunt(props) {
   let [todoInputValue, setTodoInputValue] = React.useState('');
-  //todoInputValue = 'Введите текст заметки';
 
   function submitEventHandler(event) {
     event.preventDefault();
