@@ -1,47 +1,45 @@
 import React, { Fragment } from 'react';
-
 import TodoInpunt from '../TodoInput';
 import TodoList from '../TodoList';
 import Context from '../context';
+import TodoObject from '../todoStorage/TodoObject';
+import TodoStorage from '../todoStorage/TodoStorage';
 
 export const Home = () => {
-  let [todoList, setTodoListState] = React.useState(getTodoList());
+  const storage = new TodoStorage();
+  var [todoList, setTodoListState] = React.useState(getTodoList());
 
   //получение списка todo
   function getTodoList() {
-    let todoList = [
-      { id: 1, isActive: true, text: 'note1' },
-      { id: 2, isActive: false, text: 'note2' },
-      { id: 3, isActive: true, text: 'note3' },
-      { id: 4, isActive: true, text: 'note4' },
-      { id: 5, isActive: true, text: 'note5' },
-    ];
-
-    return todoList;
+    return storage.getTodosFromStorage();
   }
 
   //добавление элемента в todo-список
   function addTodoItem(text) {
-    setTodoListState(
-      todoList.concat([
-        {
-          id: todoList.length + 1,
-          isActive: true,
-          text: text,
-        },
-      ])
-    );
+    let todoObject = new TodoObject({
+      id: todoList.length + 1,
+      isActive: true,
+      text: text,
+    });
+
+    setTodoListState(todoList.concat([todoObject]));
+
+    todoObject.saveIntoLocalStorage();
   }
 
   //удаление элемента todo из списка
   function removeTodoItem(id) {
+    let key = 'todoObject';
     setTodoListState(todoList.filter((todoItem) => todoItem.id !== id));
+    key += id.toString();
+    storage.removeTodoFromStorage(key);
     console.log('removed id = ', id);
   }
 
   //изменение статуса элемента todo
   function changeTodoItemStatus(id) {
-    console.log('todo id = ', id);
+    console.log('changed todo id = ', id);
+
     setTodoListState(
       todoList.map((todoItem) => {
         if (todoItem.id === id) {
