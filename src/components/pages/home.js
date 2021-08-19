@@ -38,32 +38,28 @@ export const Home = () => {
 
   //изменение статуса элемента todo
   function changeTodoItemStatus(id) {
-    //let key = 'todoObject';
+    let key = 'todoObject';
 
     setTodoListState(
       todoList.map((todoItem) => {
         if (todoItem.id === id) {
           todoItem.isActive = !todoItem.isActive;
-        }
 
-        /*
-        storage.setTodoIntoStorage(
-          key,
-          new TodoObject({
-            id: todoItem.id,
-            isACtive: todoItem.isActive,
-            text: todoItem.text,
-          })
-        );
-        */
+          storage.setTodoIntoStorage(
+            key + id.toString(),
+            new TodoObject({
+              id: todoItem.id,
+              isActive: todoItem.isActive,
+              text: todoItem.text,
+            })
+          );
+
+          console.log('changed todo = ', todoItem);
+        }
 
         return todoItem;
       })
     );
-    //key += id.toString();
-
-    //storage.setTodoIntoStorage(key, {todoItem.id: id, todoItem.isActive: todoItem.isActive, todoItem.text: todoItem.text});
-    console.log('changed todo id = ', id);
   }
 
   return (
