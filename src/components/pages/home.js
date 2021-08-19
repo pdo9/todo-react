@@ -17,7 +17,7 @@ export const Home = () => {
   //добавление элемента в todo-список
   function addTodoItem(text) {
     let todoObject = new TodoObject({
-      id: todoList.length + 1,
+      id: Date.now(),
       isActive: true,
       text: text,
     });
@@ -38,16 +38,32 @@ export const Home = () => {
 
   //изменение статуса элемента todo
   function changeTodoItemStatus(id) {
-    console.log('changed todo id = ', id);
+    //let key = 'todoObject';
 
     setTodoListState(
       todoList.map((todoItem) => {
         if (todoItem.id === id) {
           todoItem.isActive = !todoItem.isActive;
         }
+
+        /*
+        storage.setTodoIntoStorage(
+          key,
+          new TodoObject({
+            id: todoItem.id,
+            isACtive: todoItem.isActive,
+            text: todoItem.text,
+          })
+        );
+        */
+
         return todoItem;
       })
     );
+    //key += id.toString();
+
+    //storage.setTodoIntoStorage(key, {todoItem.id: id, todoItem.isActive: todoItem.isActive, todoItem.text: todoItem.text});
+    console.log('changed todo id = ', id);
   }
 
   return (

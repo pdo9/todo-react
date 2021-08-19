@@ -16,11 +16,18 @@ export default class TodoStorage {
       }
     }
 
+    /*
     for (let i = 0; i <= todosFromStorage.length - 1; i++) {
       console.log(todosFromStorage[i]);
     }
+    */
 
     return todosFromStorage;
+  }
+
+  //добавление/обновление объекта todo в localStorage по ключу
+  setTodoIntoStorage(key, todoObject) {
+    localStorage.setItem(key, JSON.stringify(todoObject));
   }
 
   //удаление объекта todo из localStorage по ключу
