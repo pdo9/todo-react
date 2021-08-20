@@ -10,6 +10,7 @@ export default function TodoList(props) {
             todoItem={todoItem}
             key={todoItem.id}
             onChange={props.onCheckBoxClick}
+            onDoubleClick={props.onDoubleClickItem}
           />
         );
       })}

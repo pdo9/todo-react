@@ -7,7 +7,8 @@ import TodoStorage from '../todoStorage/TodoStorage';
 
 export const Home = () => {
   const storage = new TodoStorage();
-  var [todoList, setTodoListState] = React.useState(getTodoList());
+  const [todoList, setTodoListState] = React.useState(getTodoList());
+  const inputElementRef = React.useRef();
 
   //получение списка todo
   function getTodoList() {
@@ -62,12 +63,43 @@ export const Home = () => {
     );
   }
 
+  //изменение текста элемента todo
+  function editingTodoItemText(id) {
+    inputElementRef.current.focus();
+    //inputElementRef.current.isInEditMode = true;
+
+    setTodoListState(
+      todoList.map((todoItem) => {
+        if (todoItem.id === id) {
+          inputElementRef.current.value = todoItem.text;
+
+          storage.setTodoIntoStorage(
+            'todoObject' + id.toString(),
+            new TodoObject({
+              id: todoItem.id,
+              isActive: todoItem.isActive,
+              text: inputElementRef.current.value,
+            })
+          );
+
+          console.log('editingTodoItemText: ', todoItem);
+        }
+
+        return todoItem;
+      })
+    );
+  }
+
   return (
     <Fragment>
       <Context.Provider value={{ removeTodoItem: removeTodoItem }}>
         <div>
           <div>
-            <TodoInpunt onCreate={addTodoItem} />
+            <TodoInpunt
+              onCreate={addTodoItem}
+              ref={inputElementRef}
+              //isInEditMode={false}
+            />
           </div>
 
           <div>
@@ -78,6 +110,7 @@ export const Home = () => {
               <TodoList
                 todoList={todoList}
                 onCheckBoxClick={changeTodoItemStatus}
+                onDoubleClickItem={editingTodoItemText}
               ></TodoList>
             ) : (
               <p>У вас нет созданных заметок.</p>
