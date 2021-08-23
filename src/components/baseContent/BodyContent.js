@@ -16,12 +16,20 @@ export default function BodyContent() {
       <div>
         <BrowserRouter>
           <Switch>
+            <Route path='/' exact>
+              <Home />
+            </Route>
+
             <Route path='/login' exact>
               <Login />
             </Route>
 
-            <Route path='/' exact>
-              <Home />
+            <Route path='/logout' exact>
+              <Logout />
+            </Route>
+
+            <Route path='/auth' exact>
+              <AuthExample />
             </Route>
 
             <Route path='/logout' exact>
