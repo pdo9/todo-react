@@ -10,31 +10,14 @@ export const Home = () => {
   const [todoList, setTodoListState] = React.useState(getTodoList());
   const inputElementRef = React.useRef();
 
-  var selectedID = 0;
-
   //получение списка todo
   function getTodoList() {
     return storage.getTodosFromStorage();
   }
 
-  /*
-  //добавление элемента в todo-список
-  function addTodoItem(text) {
-    let todoObject = new TodoObject({
-      id: Date.now(),
-      isActive: true,
-      text: text,
-    });
-
-    setTodoListState(todoList.concat([todoObject]));
-
-    todoObject.saveIntoLocalStorage();
-  }
-  */
-
   //добавление/имзенение элемента todo
   function todoInputHandle(text) {
-    if (selectedID === 0) {
+    if (!inputElementRef.current.todoID) {
       let todoObject = new TodoObject({
         id: Date.now(),
         isActive: true,
@@ -46,9 +29,13 @@ export const Home = () => {
     } else {
       setTodoListState(
         todoList.map((todoItem) => {
-          if (todoItem.id === selectedID) {
+          if (todoItem.id === inputElementRef.current.todoID) {
             todoItem.text = text;
-            storage.setTodoIntoStorage('todoObject' + selectedID, todoItem);
+
+            storage.setTodoIntoStorage(
+              'todoObject' + inputElementRef.current.todoID,
+              todoItem
+            );
             console.log('changed todo item:', todoItem);
           }
 
@@ -96,76 +83,25 @@ export const Home = () => {
   //установка фокуса в окно ввода
   function todoInputSetFocus(id) {
     inputElementRef.current.focus();
+    inputElementRef.current.todoID = id;
 
     todoList.map((todoItem) => {
       if (todoItem.id === id) {
         inputElementRef.current.value = todoItem.text;
         console.log('selected todo item: ', todoItem);
-        selectedID = todoItem.id;
+        inputElementRef.current.todoID = todoItem.id;
       }
 
       return todoItem;
     });
   }
-
-  /*
-  //возвращает объект todoItem по его id
-  function getTodoItem(id) {
-    let selectedTodoItem = null;
-
-    if (!id) {
-      return null;
-    }
-
-    todoList.map((todoItem) => {
-      if (todoItem.id === id) {
-        selectedTodoItem = new TodoObject(todoItem);
-      }
-
-      return todoItem;
-    });
-
-    return selectedTodoItem;
-  }
-  */
-
-  /*
-  //изменение текста элемента todo
-  function changeTodoItemText(id) {
-    const selectedTodoItem = getTodoItem(id);
-    console.log('changeTodoItemText - selected todo item: ', selectedTodoItem);
-
-    setTodoListState(
-      todoList.map((todoItem) => {
-        if (todoItem.id === id) {
-          inputElementRef.current.value = todoItem.text;
-
-          storage.setTodoIntoStorage(
-            'todoObject' + id.toString(),
-            new TodoObject({
-              id: todoItem.id,
-              isActive: todoItem.isActive,
-              text: inputElementRef.current.value,
-            })
-          );
-        }
-
-        return todoItem;
-      })
-    );
-  }
-  */
 
   return (
     <Fragment>
       <Context.Provider value={{ removeTodoItem: removeTodoItem }}>
         <div>
           <div>
-            <TodoInpunt
-              ref={inputElementRef}
-              onEdit={todoInputHandle}
-              //todoObject={getTodoItem}
-            />
+            <TodoInpunt ref={inputElementRef} onEdit={todoInputHandle} />
           </div>
 
           <div>
