@@ -9,6 +9,7 @@ export default class TodoObject {
   //сохранение объекта todo в localStorage
   saveIntoLocalStorage() {
     localStorage.setItem(`todoObject${this.id}`, JSON.stringify(this));
+    //console.log('saveIntoLocalStorage:', JSON.stringify(this));
   }
 
   //удаление объекта todo из localStorage

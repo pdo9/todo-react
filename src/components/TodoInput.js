@@ -40,7 +40,9 @@ function TodoInpunt(props, ref) {
     event.preventDefault();
 
     if (todoInputValue.trim()) {
-      props.onCreate(todoInputValue);
+      props.onEdit(todoInputValue);
+      //props.onCreate(todoInputValue);
+      //props.getTodoItem();
       setTodoInputValue('');
     }
   }
@@ -52,7 +54,7 @@ function TodoInpunt(props, ref) {
       style={{ margin: '10px 0px' }}
     >
       <input
-        //value={todoInputValue}
+        value={todoInputValue}
         onChange={(event) => setTodoInputValue(event.target.value)}
         placeholder='Введите текст заметки'
         ref={ref}

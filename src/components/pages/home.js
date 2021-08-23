@@ -10,11 +10,14 @@ export const Home = () => {
   const [todoList, setTodoListState] = React.useState(getTodoList());
   const inputElementRef = React.useRef();
 
+  var selectedID = 0;
+
   //получение списка todo
   function getTodoList() {
     return storage.getTodosFromStorage();
   }
 
+  /*
   //добавление элемента в todo-список
   function addTodoItem(text) {
     let todoObject = new TodoObject({
@@ -26,6 +29,33 @@ export const Home = () => {
     setTodoListState(todoList.concat([todoObject]));
 
     todoObject.saveIntoLocalStorage();
+  }
+  */
+
+  //добавление/имзенение элемента todo
+  function todoInputHandle(text) {
+    if (selectedID === 0) {
+      let todoObject = new TodoObject({
+        id: Date.now(),
+        isActive: true,
+        text: text,
+      });
+
+      setTodoListState(todoList.concat([todoObject]));
+      todoObject.saveIntoLocalStorage();
+    } else {
+      setTodoListState(
+        todoList.map((todoItem) => {
+          if (todoItem.id === selectedID) {
+            todoItem.text = text;
+            storage.setTodoIntoStorage('todoObject' + selectedID, todoItem);
+            console.log('changed todo item:', todoItem);
+          }
+
+          return todoItem;
+        })
+      );
+    }
   }
 
   //удаление элемента todo из списка
@@ -63,10 +93,47 @@ export const Home = () => {
     );
   }
 
-  //изменение текста элемента todo
-  function editingTodoItemText(id) {
+  //установка фокуса в окно ввода
+  function todoInputSetFocus(id) {
     inputElementRef.current.focus();
-    //inputElementRef.current.isInEditMode = true;
+
+    todoList.map((todoItem) => {
+      if (todoItem.id === id) {
+        inputElementRef.current.value = todoItem.text;
+        console.log('selected todo item: ', todoItem);
+        selectedID = todoItem.id;
+      }
+
+      return todoItem;
+    });
+  }
+
+  /*
+  //возвращает объект todoItem по его id
+  function getTodoItem(id) {
+    let selectedTodoItem = null;
+
+    if (!id) {
+      return null;
+    }
+
+    todoList.map((todoItem) => {
+      if (todoItem.id === id) {
+        selectedTodoItem = new TodoObject(todoItem);
+      }
+
+      return todoItem;
+    });
+
+    return selectedTodoItem;
+  }
+  */
+
+  /*
+  //изменение текста элемента todo
+  function changeTodoItemText(id) {
+    const selectedTodoItem = getTodoItem(id);
+    console.log('changeTodoItemText - selected todo item: ', selectedTodoItem);
 
     setTodoListState(
       todoList.map((todoItem) => {
@@ -81,14 +148,13 @@ export const Home = () => {
               text: inputElementRef.current.value,
             })
           );
-
-          console.log('editingTodoItemText: ', todoItem);
         }
 
         return todoItem;
       })
     );
   }
+  */
 
   return (
     <Fragment>
@@ -96,9 +162,9 @@ export const Home = () => {
         <div>
           <div>
             <TodoInpunt
-              onCreate={addTodoItem}
               ref={inputElementRef}
-              //isInEditMode={false}
+              onEdit={todoInputHandle}
+              //todoObject={getTodoItem}
             />
           </div>
 
@@ -110,7 +176,7 @@ export const Home = () => {
               <TodoList
                 todoList={todoList}
                 onCheckBoxClick={changeTodoItemStatus}
-                onDoubleClickItem={editingTodoItemText}
+                onDoubleClickItem={todoInputSetFocus}
               ></TodoList>
             ) : (
               <p>У вас нет созданных заметок.</p>
