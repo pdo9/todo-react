@@ -18,7 +18,11 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-const userNameLoggedIn = 'user1';
+const KEY_AUTHORIZED_USER_NAME = 'userName';
+
+let currentUserName = !localStorage.getItem(KEY_AUTHORIZED_USER_NAME)
+  ? undefined
+  : localStorage.getItem(KEY_AUTHORIZED_USER_NAME);
 
 export default function BodyContent() {
   /*
@@ -60,7 +64,7 @@ export default function AuthExample() {
     isAuthenticated: false,
     signin(cb) {
       fakeAuth.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
+      setTimeout(cb, 100);
     },
     signout(cb) {
       fakeAuth.isAuthenticated = false;
@@ -84,16 +88,13 @@ export default function AuthExample() {
   }
 
   function useProvideAuth() {
-    let currentUserName = localStorage.getItem('userName');
-    console.log('currentUser', currentUserName);
-
     const [user, setUser] = React.useState(currentUserName);
 
     const signin = (cb) => {
       return fakeAuth.signin(() => {
-        setUser(userNameLoggedIn);
+        setUser(currentUserName);
         cb();
-        localStorage.setItem('userName', userNameLoggedIn);
+        localStorage.setItem(KEY_AUTHORIZED_USER_NAME, currentUserName);
         //console.log('user logged in:', user);
       });
     };
@@ -102,7 +103,7 @@ export default function AuthExample() {
       return fakeAuth.signout(() => {
         setUser(null);
         cb();
-        localStorage.removeItem('userName');
+        localStorage.removeItem(KEY_AUTHORIZED_USER_NAME);
         //console.log('user logged out:', user);
       });
     };
@@ -117,12 +118,13 @@ export default function AuthExample() {
   function AuthButton() {
     let history = useHistory();
     let auth = useAuth();
-    console.log(history);
-    console.log(auth);
+
+    console.log('history:', history);
+    console.log('auth', auth);
 
     return auth.user ? (
       <p>
-        Welcome!{' '}
+        Welcome, {currentUserName}!
         <button
           onClick={() => {
             auth.signout(() => history.push('/'));
@@ -140,7 +142,6 @@ export default function AuthExample() {
   // screen if you're not yet authenticated.
   function PrivateRoute({ children, ...rest }) {
     let auth = useAuth();
-    fakeAuth.isAuthenticated = localStorage.getItem('userName');
 
     return (
       <Route
@@ -183,12 +184,34 @@ export default function AuthExample() {
       });
     };
 
+    function loginSubmitEventHandler(event) {
+      event.preventDefault();
+
+      auth.signin(() => {
+        history.replace(from);
+      });
+      console.log('currentUserName: ', currentUserName);
+    }
+
     return (
       <div>
-        <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
-        <button style={{ height: '40px', width: '100px' }} onClick={login}>
-          Вход
-        </button>
+        <form onSubmit={loginSubmitEventHandler}>
+          <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
+          <input
+            type='text'
+            placeholder='Введите имя пользователя'
+            onChange={(event) => (currentUserName = event.target.value)}
+          ></input>
+          <p>
+            <button
+              style={{ height: '40px', width: '100px' }}
+              onClick={login}
+              type='submit'
+            >
+              Вход
+            </button>
+          </p>
+        </form>
       </div>
     );
   }
