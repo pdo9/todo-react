@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  // BrowserRouter,
-  // Switch,
-  Route,
-  //Link,
-  Redirect,
-  // useHistory,
-  // useLocation,
-} from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import useAuth from './useAuth';
 

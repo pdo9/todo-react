@@ -1,16 +1,6 @@
 import React from 'react';
-// import {
-//   BrowserRouter,
-//   Switch,
-//   Route,
-//   //Link,
-//   Redirect,
-//   useHistory,
-//   useLocation,
-// } from 'react-router-dom';
 
 import { authContext } from './authContext';
-//import { currentUserName } from './currentUserName';
 
 const KEY_AUTHORIZED_USER_NAME = 'userName';
 

@@ -1,13 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  //BrowserRouter,
-  //Switch,
-  //Route,
-  //Link,
-  //Redirect,
-  useHistory,
-  useLocation,
-} from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import useAuth from '../auth/useAuth';
 
 const KEY_AUTHORIZED_USER_NAME = 'userName';
@@ -29,16 +21,8 @@ export const Login = () => {
 
   function loginSubmitEventHandler(event) {
     //event.preventDefault();
-
-    /*
-    auth.signin(() => {
-      history.replace(from);
-    });
-    */
     login();
-
     localStorage.setItem(KEY_AUTHORIZED_USER_NAME, userName);
-
     console.log(
       'currentUserName: ',
       localStorage.getItem(KEY_AUTHORIZED_USER_NAME)
@@ -68,13 +52,4 @@ export const Login = () => {
       </div>
     </Fragment>
   );
-
-  /*
-  return (
-    <Fragment>
-      <h1>Авторизация</h1>
-      <button style={{ height: '40px', width: '100px' }}>Вход</button>
-    </Fragment>
-  );
-  */
 };
