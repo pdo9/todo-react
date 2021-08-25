@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Context from './context';
+import todoContext from './todoContext';
 
 export default function TodoItem(props) {
   //console.log(props.todoItem);
@@ -8,7 +8,7 @@ export default function TodoItem(props) {
     ? 'todo-item'
     : 'todo-item-done';
 
-  let { removeTodoItem } = useContext(Context);
+  let { removeTodoItem } = useContext(todoContext);
 
   return (
     <li

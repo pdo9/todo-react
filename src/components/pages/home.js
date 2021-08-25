@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import TodoInpunt from '../TodoInput';
 import TodoList from '../TodoList';
-import Context from '../context';
+import todoContext from '../todoContext';
 import TodoObject from '../todoStorage/TodoObject';
 import TodoStorage from '../todoStorage/TodoStorage';
+
+const KEY_AUTHORIZED_USER_NAME = 'userName';
 
 export const Home = () => {
   const storage = new TodoStorage();
@@ -98,9 +100,13 @@ export const Home = () => {
 
   return (
     <Fragment>
-      <Context.Provider value={{ removeTodoItem: removeTodoItem }}>
+      <todoContext.Provider value={{ removeTodoItem: removeTodoItem }}>
         <div>
           <div>
+            <p>
+              Добро пожаловать, {localStorage.getItem(KEY_AUTHORIZED_USER_NAME)}
+              !
+            </p>
             <TodoInpunt ref={inputElementRef} onEdit={todoInputHandle} />
           </div>
 
@@ -119,7 +125,7 @@ export const Home = () => {
             )}
           </div>
         </div>
-      </Context.Provider>
+      </todoContext.Provider>
     </Fragment>
   );
 };

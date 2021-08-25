@@ -3,13 +3,12 @@ import Sidebar from './SidebarContent';
 //import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Home } from '../pages/home';
 //import { LoginPage } from '../pages/login';
+import { Login } from '../pages/login';
 import { Logout } from '../pages/logout';
 import AuthExample from '../pages/AuthExample';
 
 import PrivateRoute from '../auth/PrivateRoute';
-import LoginPage from '../auth/LoginPage';
 import ProvideAuth from '../auth/ProvideAuth';
-import AuthButton from '../auth/AuthButton';
 
 //import authContext from '../auth/authContext';
 
@@ -33,14 +32,14 @@ export default function BodyContent() {
       <div>
         <ProvideAuth>
           <BrowserRouter>
-            <AuthButton />
+            {/*<AuthButton />*/}
             <Switch>
               <PrivateRoute path='/' exact>
                 <Home />
               </PrivateRoute>
 
-              <Route path='/login2' exact>
-                <LoginPage />
+              <Route path='/login' exact>
+                <Login />
               </Route>
 
               <Route path='/logout' exact>
