@@ -4,10 +4,13 @@ import TodoList from '../TodoList';
 import todoContext from '../todoContext';
 import TodoObject from '../todoStorage/TodoObject';
 import TodoStorage from '../todoStorage/TodoStorage';
+//import { observer } from 'mobx-react';
+//import { TodoStore } from '../stores/TodoStore';
 
 const KEY_AUTHORIZED_USER_NAME = 'userName';
+//const todoStore = new TodoStore();
 
-export const Home = () => {
+export const Home = /*observer*/ () => {
   const storage = new TodoStorage();
   const [todoList, setTodoListState] = React.useState(getTodoList());
   const inputElementRef = React.useRef();
@@ -117,6 +120,7 @@ export const Home = () => {
             {todoList.length ? (
               <TodoList
                 todoList={todoList}
+                //todoList2={todoStore.getTodoList}
                 onCheckBoxClick={changeTodoItemStatus}
                 onDoubleClickItem={todoInputSetFocus}
               ></TodoList>

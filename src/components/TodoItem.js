@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import todoContext from './todoContext';
+//import { observer } from 'mobx-react';
 
-export default function TodoItem(props) {
+export default (function TodoItem(props) {
   //console.log(props.todoItem);
 
   let todoItemClassName = props.todoItem.isActive
@@ -30,7 +31,7 @@ export default function TodoItem(props) {
       </button>
     </li>
   );
-}
+});
 
 function getTodoItemText(props) {
   let text = `${props.todoItem.text}`;

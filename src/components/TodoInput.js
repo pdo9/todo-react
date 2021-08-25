@@ -6,7 +6,7 @@ function TodoInpunt(props, ref) {
   function submitEventHandler(event) {
     event.preventDefault();
 
-    console.log('todoID', ref.current.todoID);
+    //console.log('todoID', ref.current.todoID);
 
     if (todoInputValue.trim()) {
       props.onEdit(todoInputValue);

@@ -13,6 +13,9 @@ export default function SidebarBase() {
         <a className='nav-link' href='/logout'>
           Выход
         </a>
+        <a className='nav-link' href='/test'>
+          test
+        </a>
       </nav>
     </aside>
   );

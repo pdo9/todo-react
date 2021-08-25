@@ -34,6 +34,8 @@ export default function BodyContent() {
               <Route path='/auth' exact>
                 <AuthExample />
               </Route>
+
+              <Route path='test' exact></Route>
             </Switch>
           </BrowserRouter>
         </ProvideAuth>
