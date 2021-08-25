@@ -23,33 +23,30 @@ export const Login = () => {
     //event.preventDefault();
     login();
     localStorage.setItem(KEY_AUTHORIZED_USER_NAME, userName);
-    console.log(
-      'currentUserName: ',
-      localStorage.getItem(KEY_AUTHORIZED_USER_NAME)
-    );
+
+    console.log('currentUserName: ', userName);
   }
 
   return (
     <Fragment>
-      <div>
-        <form onSubmit={loginSubmitEventHandler}>
-          <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
-          <input
-            type='text'
-            placeholder='Введите имя пользователя'
-            onChange={(event) => setUserName(event.target.value)}
-          ></input>
-          <p>
-            <button
-              style={{ height: '40px', width: '100px' }}
-              //onClick={login}
-              type='submit'
-            >
-              Вход
-            </button>
-          </p>
-        </form>
-      </div>
+      <form onSubmit={loginSubmitEventHandler}>
+        <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
+        <input
+          type='text'
+          placeholder='Введите имя пользователя'
+          onChange={(event) => setUserName(event.target.value)}
+          //onChange={(event) => loginSubmitEventHandler(event.target.value)}
+        ></input>
+        <p>
+          <button
+            style={{ height: '40px', width: '100px' }}
+            //onClick={login}
+            type='submit'
+          >
+            Вход
+          </button>
+        </p>
+      </form>
     </Fragment>
   );
 };

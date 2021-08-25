@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { authContext } from './authContext';
 
 const KEY_AUTHORIZED_USER_NAME = 'userName';

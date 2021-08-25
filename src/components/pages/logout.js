@@ -13,7 +13,10 @@ export const Logout = () => {
 
   return auth.user ? (
     <Fragment>
-      <p>Добро пожаловать, {localStorage.getItem(KEY_AUTHORIZED_USER_NAME)}!</p>
+      <p>
+        Желаете выйти из системы,{' '}
+        {localStorage.getItem(KEY_AUTHORIZED_USER_NAME)}?
+      </p>
       <p>
         <button
           style={{ height: '40px', width: '100px' }}

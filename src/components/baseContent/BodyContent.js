@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Sidebar from './SidebarContent';
 import { Home } from '../pages/home';
 import { Login } from '../pages/login';
@@ -6,8 +7,6 @@ import { Logout } from '../pages/logout';
 import AuthExample from '../pages/AuthExample';
 import PrivateRoute from '../auth/PrivateRoute';
 import ProvideAuth from '../auth/ProvideAuth';
-
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 export default function BodyContent() {
   return (
