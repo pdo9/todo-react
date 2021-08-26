@@ -1,32 +1,53 @@
-import { action, makeObservable, observable } from 'mobx';
-import TodoStorage from '../todoStorage/TodoStorage';
+import { makeAutoObservable } from 'mobx';
 
-const storage = new TodoStorage();
-
-export class TodoStore {
-  constructor() {
-    makeObservable(this, {
-      todoList: observable,
-      getTodoList: action,
-      // addTodoItem: action,
-      // editTodoItem: action,
-      // removeTodoItem: action,
-    });
-  }
-
+class TodoStore {
   todoList = [];
 
+  constructor() {
+    makeAutoObservable(this);
+    this.todoList = [
+      { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
+      { userID: 1, todoID: 2, isCompleted: true, todoText: '222' },
+      { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
+    ];
+  }
+
   getTodoList = () => {
-    this.todoList = storage.getTodosFromStorage();
+    this.todoList = [
+      { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
+      { userID: 1, todoID: 2, isCompleted: false, todoText: '222' },
+      { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
+      { userID: 1, todoID: 4, isCompleted: false, todoText: '444' },
+    ];
     console.log('getTodoList:', this.todoList);
-    //this.todoList = [{ id: 1629882607953, isActive: true, text: 'sdfdsf' }];
   };
 
-  // addTodoItem = () => {};
+  addTodoItem = (todoItem) => {
+    this.todoList.push(todoItem);
+    console.log('TodoStore.addTodoItem:', todoItem);
+  };
 
-  // editTodoItem = () => {};
+  removeTodoItem = (id) => {
+    this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
+    console.log('TodoStore.removeTodoItem:', id);
+  };
 
-  // editTodoItem = () => {};
-
-  // removeTodoItem = () => {};
+  changeTodoItemStatus = (id) => {
+    this.todoList = this.todoList.map((todoItem) => {
+      if (todoItem.todoID === id) {
+        console.log(
+          'BEFORE TodoStore.changeTodoItemStatus:',
+          todoItem.isCompleted
+        );
+        todoItem.isCompleted = !todoItem.isCompleted;
+        console.log(
+          'AFTER TodoStore.changeTodoItemStatus:',
+          todoItem.isCompleted
+        );
+      }
+      return todoItem;
+    });
+  };
 }
+
+export default new TodoStore();

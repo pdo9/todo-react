@@ -1,0 +1,9 @@
+.CustomButton {
+  padding: 5px 15 px;
+  color: dodgerblue;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid dodgerblue;
+  height: 40px;
+  width: 100px;
+}
