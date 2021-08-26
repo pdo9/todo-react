@@ -1,89 +1,53 @@
-import { makeObservable, observable, action } from 'mobx';
-import TodoStorage from '../todoStorage/TodoStorage';
-import TodoObject from '../todoStorage/TodoObject';
+import { makeAutoObservable } from 'mobx';
 
-const storage = new TodoStorage();
+class TodoStore {
+  todoList = [];
 
-export function getTodoStore(inputElementRef) {
-  return makeObservable(
-    {
-      todoList: [], //storage.getTodosFromStorage(), // getTodoList(),
+  constructor() {
+    makeAutoObservable(this);
+    this.todoList = [
+      { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
+      { userID: 1, todoID: 2, isCompleted: true, todoText: '222' },
+      { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
+    ];
+  }
 
-      getTodosItems() {
-        this.todoList = storage.getTodosFromStorage();
-      },
+  getTodoList = () => {
+    this.todoList = [
+      { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
+      { userID: 1, todoID: 2, isCompleted: false, todoText: '222' },
+      { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
+      { userID: 1, todoID: 4, isCompleted: false, todoText: '444' },
+    ];
+    console.log('getTodoList:', this.todoList);
+  };
 
-      todoInputHandle(text) {
-        if (!inputElementRef.current.todoID) {
-          let todoObject = new TodoObject({
-            id: Date.now(),
-            isActive: true,
-            text: text,
-          });
+  addTodoItem = (todoItem) => {
+    this.todoList.push(todoItem);
+    console.log('TodoStore.addTodoItem:', todoItem);
+  };
 
-          //setTodoListState(todoList.concat([todoObject]));
+  removeTodoItem = (id) => {
+    this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
+    console.log('TodoStore.removeTodoItem:', id);
+  };
 
-          todoObject.saveIntoLocalStorage();
-          //this.todoList = storage.getTodosFromStorage(); //this.todoList.push(todoObject);
-          this.getTodosItems();
-          console.log(this.todoList);
-        } else {
-          //setTodoListState(
-          this.todoList.map((todoItem) => {
-            if (todoItem.id === inputElementRef.current.todoID) {
-              todoItem.text = text;
-
-              storage.setTodoIntoStorage(
-                'todoObject' + inputElementRef.current.todoID,
-                todoItem
-              );
-              console.log('changed todo item:', todoItem);
-            }
-
-            return todoItem;
-          });
-          //);
-        }
-      },
-
-      removeTodoItem(id) {
-        let key = 'todoObject';
-        //setTodoListState(todoList.filter((todoItem) => todoItem.id !== id));
-        this.todoList.filter((todoItem) => todoItem.id !== id);
-        key += id.toString();
-        storage.removeTodoFromStorage(key);
-        console.log('removed id = ', id);
-      },
-
-      changeTodoItemStatus(id) {
-        //setTodoListState(
-        this.todoList.map((todoItem) => {
-          if (todoItem.id === id) {
-            todoItem.isActive = !todoItem.isActive;
-
-            storage.setTodoIntoStorage(
-              'todoObject' + id.toString(),
-              new TodoObject({
-                id: todoItem.id,
-                isActive: todoItem.isActive,
-                text: todoItem.text,
-              })
-            );
-
-            console.log('changed todo = ', todoItem);
-          }
-
-          return todoItem;
-        });
-        //);
-      },
-    },
-    {
-      todoList: observable,
-      getTodosItems: action.bound,
-      todoInputHandle: action.bound,
-      removeTodoItem: action.bound,
-      changeTodoItemStatus: action.bound,
-    }
-  );
+  changeTodoItemStatus = (id) => {
+    this.todoList = this.todoList.map((todoItem) => {
+      if (todoItem.todoID === id) {
+        console.log(
+          'BEFORE TodoStore.changeTodoItemStatus:',
+          todoItem.isCompleted
+        );
+        todoItem.isCompleted = !todoItem.isCompleted;
+        console.log(
+          'AFTER TodoStore.changeTodoItemStatus:',
+          todoItem.isCompleted
+        );
+      }
+      return todoItem;
+    });
+  };
 }
+
+export default new TodoStore();
