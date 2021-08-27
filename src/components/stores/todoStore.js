@@ -2,14 +2,21 @@ import { makeAutoObservable } from 'mobx';
 
 class TodoStore {
   todoList = [];
+  todoItem = {
+    userID: 0,
+    todoID: 0,
+    isCompleted: false,
+    todoText: '',
+  };
 
   constructor() {
     makeAutoObservable(this);
-    this.todoList = [
-      { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
-      { userID: 1, todoID: 2, isCompleted: true, todoText: '222' },
-      { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
-    ];
+
+    // this.todoList = [
+    //   { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
+    //   { userID: 1, todoID: 2, isCompleted: true, todoText: '222' },
+    //   { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
+    // ];
   }
 
   getTodoList = () => {
@@ -21,6 +28,8 @@ class TodoStore {
     ];
     console.log('getTodoList:', this.todoList);
   };
+
+  setTodoItem = () => {};
 
   addTodoItem = (todoItem) => {
     this.todoList.push(todoItem);
@@ -35,15 +44,9 @@ class TodoStore {
   changeTodoItemStatus = (id) => {
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === id) {
-        console.log(
-          'BEFORE TodoStore.changeTodoItemStatus:',
-          todoItem.isCompleted
-        );
+        console.log('BEFORE TodoStore.changeTodoItemStatus:', todoItem);
         todoItem.isCompleted = !todoItem.isCompleted;
-        console.log(
-          'AFTER TodoStore.changeTodoItemStatus:',
-          todoItem.isCompleted
-        );
+        console.log('AFTER TodoStore.changeTodoItemStatus:', todoItem);
       }
       return todoItem;
     });

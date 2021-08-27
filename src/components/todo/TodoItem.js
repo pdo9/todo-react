@@ -14,7 +14,7 @@ const TodoItem = (props) => {
         </div>
         <div>
           <strong>
-            {props.number}
+            {props.serialNumber}
             {'. '} [id={props.todoItem.todoID}]{' '}
           </strong>
           {props.todoItem.todoText}

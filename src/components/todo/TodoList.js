@@ -4,11 +4,15 @@ import TodoItem from './TodoItem';
 import TodoStore from '../stores/TodoStore';
 
 const TodoList = ({ todoList, title }) => {
+  React.useEffect(() => {
+    TodoStore.getTodoList();
+  }, []);
+
   return (
     <React.Fragment>
       <h2 style={{ textAlign: 'center' }}>{title}</h2>
 
-      {todoList.map((todoItem, index) => (
+      {TodoStore.todoList.map((todoItem, index) => (
         <TodoItem
           key={todoItem.todoID}
           todoItem={todoItem}
@@ -17,7 +21,7 @@ const TodoList = ({ todoList, title }) => {
             TodoStore.changeTodoItemStatus(todoItem.todoID)
           }
           onRemoveButtonClick={() => TodoStore.removeTodoItem(todoItem.todoID)}
-          number={index + 1}
+          serialNumber={index + 1}
         />
       ))}
     </React.Fragment>

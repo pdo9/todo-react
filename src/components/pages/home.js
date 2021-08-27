@@ -16,6 +16,12 @@ const Home = () => {
   const addNewTodoItem = (event) => {
     event.preventDefault();
     TodoStore.addTodoItem(newTodoItem);
+    setNewTodoItem({
+      userID: 0,
+      todoID: 0,
+      isCompleted: false,
+      todoText: '',
+    });
   };
 
   return (
@@ -42,7 +48,11 @@ const Home = () => {
           </button>
         </div>
       </form>
-      <TodoList title='Ваш список заметок:' todoList={TodoStore.todoList} />
+      {/* <TodoList title='Ваш список заметок:' todoList={TodoStore.todoList} /> */}
+      <TodoList
+        title='Ваш список заметок:'
+        // todoList={TodoStore.getTodoList()}
+      />
     </Fragment>
   );
 };

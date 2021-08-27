@@ -17,8 +17,8 @@ export default observer(function TodoList(props) {
       {todoStore.todoList.map((todoItem) => {
         return (
           <TodoItem
-            todoItem={todoItem}
             key={todoItem.id}
+            todoItem={todoItem}
             onChange={props.onCheckBoxClick}
             onDoubleClick={props.onDoubleClickItem}
           />
