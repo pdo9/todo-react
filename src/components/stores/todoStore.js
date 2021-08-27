@@ -29,7 +29,7 @@ class TodoStore {
     console.log('getTodoList:', this.todoList);
   };
 
-  setTodoItem = () => {};
+  //setTodoItem = () => {};
 
   addTodoItem = (todoItem) => {
     this.todoList.push(todoItem);
