@@ -1,58 +1,13 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import TodoList from '../todo/TodoList';
-import TodoStore from '../stores/TodoStore';
+import TodoFormInput from '../todo/TodoFormInput';
 
 const Home = () => {
-  let currentUserID = 1;
-
-  const [newTodoItem, setNewTodoItem] = React.useState({
-    userID: 0,
-    todoID: 0,
-    isCompleted: false,
-    todoText: '',
-  });
-
-  const addNewTodoItem = (event) => {
-    event.preventDefault();
-    TodoStore.addTodoItem(newTodoItem);
-    setNewTodoItem({
-      userID: 0,
-      todoID: 0,
-      isCompleted: false,
-      todoText: '',
-    });
-  };
-
   return (
     <Fragment>
-      <form>
-        <div>
-          <input
-            className='todo-input'
-            placeholder='Введите текст заметки'
-            value={newTodoItem.todoText}
-            onChange={(event) =>
-              setNewTodoItem({
-                userID: currentUserID,
-                todoID: Date.now(),
-                isCompleted: false,
-                todoText: event.target.value,
-              })
-            }
-          ></input>
-        </div>
-        <div>
-          <button className='todo-input-button' onClick={addNewTodoItem}>
-            Добавить
-          </button>
-        </div>
-      </form>
-      {/* <TodoList title='Ваш список заметок:' todoList={TodoStore.todoList} /> */}
-      <TodoList
-        title='Ваш список заметок:'
-        // todoList={TodoStore.getTodoList()}
-      />
+      <TodoFormInput />
+      <TodoList title='Ваш список заметок:' />
     </Fragment>
   );
 };

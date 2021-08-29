@@ -1,56 +1,77 @@
 import React from 'react';
-//import Counter from './Counter';
-//import PostItem from './PostItem';
 import PostList from './PostList';
-import CustomInput from './UI/input/CustomInput';
+import PostForm from './PostForm';
+import PostFilter from './PostFilter';
+import { usePosts } from './hooks/usePosts';
+import CustomModal from './UI/modal/CustomModal';
 import CustomButton from './UI/button/CustomButton';
+//import axios from 'axios';
+import PostService from './API/PostService';
+import Loader from './UI/loader/Loader';
+// import CustomSelect from './UI/select/CustomSelect';
+// import CustomInput from './UI/input/CustomInput';
 
 export default function TestContent() {
-  const [posts, setPosts] = React.useState([
-    { id: 1, title: 'titleHeader 1', body: 'post text 1' },
-    { id: 2, title: 'titleHeader 2', body: 'post text 2' },
-    { id: 3, title: 'titleHeader 3', body: 'post text 3' },
-    { id: 4, title: 'titleHeader 4', body: 'post text 4' },
-    { id: 5, title: 'titleHeader 5', body: 'post text 5' },
-  ]);
+  const [posts, setPosts] = React.useState([]);
+  const [filter, setFilter] = React.useState({ sort: '', query: '' });
+  const [modal, setModal] = React.useState(false);
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const [isPostsLoading, setIsPostsLoading] = React.useState(false);
 
-  // const [title, setTitle] = React.useState('');
-  // const [body, setBodyText] = React.useState('');
-  //const bodyInputRef = React.useRef();
-  const [post, setPost] = React.useState({ id: 0, title: '', body: '' });
+  React.useEffect(() => {
+    fetchPosts();
+  }, []);
 
-  const addNewPost = (event) => {
-    event.preventDefault();
+  async function fetchPosts() {
+    setIsPostsLoading(true);
+    setTimeout(async () => {
+      const posts = await PostService.getAll();
+      console.log(posts);
+      setPosts(posts);
+      setIsPostsLoading(false);
+    }, 900);
+  }
 
-    // const newPost = {
-    //   id: Date.now(),
-    //   title: title,
-    //   body: body,
-    // };
-    setPosts([...posts, { ...post, id: Date.now() }]);
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost]);
+    setModal(false);
+  };
 
-    setPost({ id: 0, title: '', body: '' });
+  const removePost = (post) => {
+    setPosts(posts.filter((p) => p.id !== post.id));
   };
 
   return (
     <div className='App'>
-      <form style={{ margin: '20px' }}>
-        <CustomInput
-          type='text'
-          placeholder='Название поста'
-          value={post.title}
-          onChange={(event) => setPost({ ...post, title: event.target.value })}
-        ></CustomInput>
-        <CustomInput
-          type='text'
-          placeholder='Описание поста'
-          //ref={bodyInputRef}
-          value={post.body}
-          onChange={(event) => setPost({ ...post, body: event.target.value })}
-        ></CustomInput>
-        <CustomButton onClick={addNewPost}>Создать пост</CustomButton>
-      </form>
-      <PostList posts={posts} title={'Список постов22'} />
+      <CustomButton onClick={fetchPosts}>Get posts</CustomButton>
+      <CustomButton
+        style={{ marginTop: '30px' }}
+        onClick={() => setModal(true)}
+      >
+        Создать пост
+      </CustomButton>
+      <CustomModal visible={modal} setVisible={setModal}>
+        <PostForm create={createPost} remove={removePost} />
+      </CustomModal>
+      <hr style={{ margin: '15px' }} />
+      <PostFilter filter={filter} setFilter={setFilter} />
+      {isPostsLoading ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '50px',
+          }}
+        >
+          <Loader />
+        </div>
+      ) : (
+        <PostList
+          posts={sortedAndSearchedPosts}
+          title={'Список постов'}
+          remove={removePost}
+        />
+      )}
     </div>
   );
 }

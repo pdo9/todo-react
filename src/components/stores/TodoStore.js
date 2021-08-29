@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 class TodoStore {
   todoList = [];
+
   todoItem = {
     userID: 0,
     todoID: 0,
@@ -11,12 +12,6 @@ class TodoStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    // this.todoList = [
-    //   { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
-    //   { userID: 1, todoID: 2, isCompleted: true, todoText: '222' },
-    //   { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
-    // ];
   }
 
   getTodoList = () => {
