@@ -1,23 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SidebarBase() {
   return (
     <aside className='sidebar'>
       <nav className='nav'>
         <div>
-          <a className='nav-link' href='/'>
+          <Link className='nav-link' to='/'>
             На главную
-          </a>
+          </Link>
         </div>
         <div>
-          <a className='nav-link' href='/login'>
+          <Link className='nav-link' to='/login'>
             Авторизация
-          </a>
+          </Link>
         </div>
         <div>
-          <a className='nav-link' href='/logout'>
+          <Link className='nav-link' to='/logout'>
             Выход
-          </a>
+          </Link>
         </div>
       </nav>
     </aside>

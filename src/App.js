@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import HeaderContent from './components/baseContent/HeaderContent';
 import BodyContent from './components/baseContent/BodyContent';
-import TestContent from './components_test/TestContent';
+// import TestContent from './components_test/TestContent';
 import FooterContent from './components/baseContent/FooterContent';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div>
       <HeaderContent />
       <BodyContent />
-      <TestContent />
+      {/* <TestContent /> */}
       <FooterContent />
     </div>
   );

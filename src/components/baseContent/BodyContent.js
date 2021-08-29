@@ -8,23 +8,25 @@ import { Logout } from '../pages/logout';
 import AuthExample from '../pages/AuthExample';
 //import PrivateRoute from '../auth/PrivateRoute';
 import ProvideAuth from '../auth/ProvideAuth';
+import TestContent from '../../components_test/TestContent';
 
 export default function BodyContent() {
   return (
-    <main className='main'>
-      <div className='sidebar'>
-        <Sidebar />
-      </div>
+    <ProvideAuth>
+      <BrowserRouter>
+        <div className='main'>
+          <div className='sidebar'>
+            <Sidebar />
+          </div>
 
-      <div className='main-content'>
-        <ProvideAuth>
-          <BrowserRouter>
+          <div className='main-content'>
             <Switch>
               {/* <PrivateRoute path='/' exact>
-                <Home />
-              </PrivateRoute> */}
+  <Home />
+</PrivateRoute> */}
               <Route path='/' exact>
                 <Home />
+                <TestContent />
               </Route>
 
               <Route path='/login' exact>
@@ -39,9 +41,9 @@ export default function BodyContent() {
                 <AuthExample />
               </Route>
             </Switch>
-          </BrowserRouter>
-        </ProvideAuth>
-      </div>
-    </main>
+          </div>
+        </div>
+      </BrowserRouter>
+    </ProvideAuth>
   );
 }
