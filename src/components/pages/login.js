@@ -1,52 +1,38 @@
-import React, { Fragment } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import useAuth from '../auth/useAuth';
+import React from 'react';
+import CustomInput from '../../components_test/UI/input/CustomInput';
+import CustomButton from '../../components_test/UI/button/CustomButton';
+import { AuthContext } from '../context';
 
-const KEY_AUTHORIZED_USER_NAME = 'userName';
+const Login = () => {
+  const { isAuth, setIsAuth } = React.useContext(AuthContext);
 
-export const Login = () => {
-  let history = useHistory();
-  let location = useLocation();
-  let auth = useAuth();
-
-  let { from } = location.state || { from: { pathname: '/' } };
-
-  let [userName, setUserName] = React.useState('');
-
-  let login = () => {
-    auth.signin(() => {
-      history.replace(from);
-    });
+  const loginHandler = (event) => {
+    event.preventDefault();
+    setIsAuth(true);
+    localStorage.setItem('auth', 'true');
   };
 
-  function loginSubmitEventHandler(event) {
-    //event.preventDefault();
-    login();
-    localStorage.setItem(KEY_AUTHORIZED_USER_NAME, userName);
-
-    console.log('currentUserName: ', userName);
-  }
-
   return (
-    <Fragment>
-      <form onSubmit={loginSubmitEventHandler}>
+    <div>
+      <form onSubmit={loginHandler}>
         <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
-        <input
+        <CustomInput
           type='text'
           placeholder='Введите имя пользователя'
-          onChange={(event) => setUserName(event.target.value)}
-          //onChange={(event) => loginSubmitEventHandler(event.target.value)}
-        ></input>
+          // onChange={(event) => setUserName(event.target.value)}
+        ></CustomInput>
         <p>
-          <button
+          <CustomButton
             style={{ height: '40px', width: '100px' }}
             //onClick={login}
             type='submit'
           >
             Вход
-          </button>
+          </CustomButton>
         </p>
       </form>
-    </Fragment>
+    </div>
   );
 };
+
+export default Login;

@@ -1,49 +1,35 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Sidebar from './SidebarContent';
-//import { Home } from '../pages/home';
-import Home from '../pages/home';
-import { Login } from '../pages/login';
-import { Logout } from '../pages/logout';
-import AuthExample from '../pages/AuthExample';
-//import PrivateRoute from '../auth/PrivateRoute';
-import ProvideAuth from '../auth/ProvideAuth';
-import TestContent from '../../components_test/TestContent';
+import AppRouter from '../appRouter/AppRouter';
+import { AuthContext } from '../context';
 
 export default function BodyContent() {
+  const [isAuth, setIsAuth] = React.useState(false);
+
+  React.useEffect(() => {
+    if (localStorage.getItem('auth')) {
+      setIsAuth(true);
+    }
+  }, []);
+
   return (
-    <ProvideAuth>
+    <AuthContext.Provider
+      value={{
+        isAuth,
+        setIsAuth: setIsAuth,
+      }}
+    >
       <BrowserRouter>
         <div className='main'>
           <div className='sidebar'>
             <Sidebar />
           </div>
-
           <div className='main-content'>
-            <Switch>
-              {/* <PrivateRoute path='/' exact>
-  <Home />
-</PrivateRoute> */}
-              <Route path='/' exact>
-                <Home />
-                <TestContent />
-              </Route>
-
-              <Route path='/login' exact>
-                <Login />
-              </Route>
-
-              <Route path='/logout' exact>
-                <Logout />
-              </Route>
-
-              <Route path='/auth' exact>
-                <AuthExample />
-              </Route>
-            </Switch>
+            <AppRouter />
           </div>
         </div>
       </BrowserRouter>
-    </ProvideAuth>
+    </AuthContext.Provider>
   );
 }
