@@ -15,7 +15,7 @@ const Login = () => {
   return (
     <div>
       <form onSubmit={loginHandler}>
-        <p>Вам необходимо авторизоваться {/*{from.pathname}*/}</p>
+        <p>Вам необходимо авторизоваться</p>
         <CustomInput
           type='text'
           placeholder='Введите имя пользователя'

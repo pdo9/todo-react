@@ -10,7 +10,7 @@ const Logout = () => {
   };
 
   return (
-    <div style={{ marginTop: '30px' }}>
+    <div style={{ marginTop: '40px' }}>
       <CustomButton onClick={logout}>Выход</CustomButton>
     </div>
   );
