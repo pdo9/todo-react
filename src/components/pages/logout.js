@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../../components_test/UI/button/CustomButton';
+import CustomButton from '../button/CustomButton';
 import { AuthContext } from '../context/authContext';
 
 const Logout = () => {

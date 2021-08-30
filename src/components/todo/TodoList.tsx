@@ -3,7 +3,11 @@ import { observer } from 'mobx-react-lite';
 import TodoItem from './TodoItem';
 import TodoStore from '../stores/TodoStore';
 
-const TodoList = ({ title }) => {
+type TProps = {
+  title: string;
+};
+
+const TodoList: React.FC<TProps> = ({ title }) => {
   React.useEffect(() => {
     TodoStore.getTodoList();
   }, []);
@@ -16,7 +20,7 @@ const TodoList = ({ title }) => {
         <TodoItem
           key={todoItem.todoID}
           todoItem={todoItem}
-          isChecked={todoItem.isCompleted}
+          // isChecked={todoItem.isCompleted}
           onCheckBoxClick={() =>
             TodoStore.changeTodoItemStatus(todoItem.todoID)
           }

@@ -1,6 +1,6 @@
 import React from 'react';
-import CustomInput from '../../components_test/UI/input/CustomInput';
-import CustomButton from '../../components_test/UI/button/CustomButton';
+import CustomInput from '../input/CustomInput';
+import CustomButton from '../button/CustomButton';
 import { AuthContext } from '../context/authContext';
 
 const Login = () => {
