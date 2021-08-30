@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomButton from '../../components_test/UI/button/CustomButton';
-import { AuthContext } from '../context';
+import { AuthContext } from '../context/authContext';
 
 const Logout = () => {
   const { isAuth, setIsAuth } = React.useContext(AuthContext);
@@ -10,7 +10,7 @@ const Logout = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '30px' }}>
       <CustomButton onClick={logout}>Выход</CustomButton>
     </div>
   );

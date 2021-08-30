@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Sidebar from './SidebarContent';
 import AppRouter from '../appRouter/AppRouter';
-import { AuthContext } from '../context';
+import { AuthContext } from '../context/authContext';
 
 export default function BodyContent() {
   const [isAuth, setIsAuth] = React.useState(false);
@@ -17,7 +17,7 @@ export default function BodyContent() {
     <AuthContext.Provider
       value={{
         isAuth,
-        setIsAuth: setIsAuth,
+        setIsAuth,
       }}
     >
       <BrowserRouter>

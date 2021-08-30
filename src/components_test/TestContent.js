@@ -29,7 +29,7 @@ export default function TestContent() {
     //   setPosts(posts);
     // }, 900);
     const response = await PostService.getAll(limit, page);
-    console.log('response:', response);
+    // console.log('response:', response);
     setPosts(response.data);
     const totalCount = response.headers['x-total-count'];
     setTotalPages(getPageCount(totalCount, limit));
@@ -50,7 +50,7 @@ export default function TestContent() {
 
   const changePage = (page) => {
     setPage(page);
-    console.log('changePage:', page);
+    // console.log('changePage:', page);
   };
 
   return (

@@ -11,6 +11,11 @@ export default function SidebarBase() {
           </Link>
         </div>
         <div>
+          <Link className='nav-link' to='/about'>
+            О сайте
+          </Link>
+        </div>
+        <div>
           <Link className='nav-link' to='/login'>
             Авторизация
           </Link>
