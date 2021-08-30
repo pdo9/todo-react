@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import TodoList from '../todo/TodoList';
 import TodoFormInput from '../todo/TodoFormInput';
-// import TestContent from '../../components_test/TestContent';
 
 const Home = () => {
   return (

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import TodoItem from './TodoItem';
 import TodoStore from '../stores/TodoStore';
 
-const TodoList = ({ todoList, title }) => {
+const TodoList = ({ title }) => {
   React.useEffect(() => {
     TodoStore.getTodoList();
   }, []);

@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
+const KEY_TODO = 'todo';
+
 class TodoStore {
   todoList = [];
 
@@ -15,16 +17,11 @@ class TodoStore {
   }
 
   getTodoList = () => {
-    // this.todoList = [
-    //   { userID: 1, todoID: 1, isCompleted: false, todoText: '111' },
-    //   { userID: 1, todoID: 2, isCompleted: false, todoText: '222' },
-    //   { userID: 1, todoID: 3, isCompleted: false, todoText: '333' },
-    //   { userID: 1, todoID: 4, isCompleted: false, todoText: '444' },
-    // ];
+    localStorage.getItem(KEY_TODO)
+      ? (this.todoList = JSON.parse(localStorage.getItem(KEY_TODO)))
+      : localStorage.setItem(KEY_TODO, '[]');
 
-    this.todoList = JSON.parse(localStorage.getItem('todo'));
-
-    console.log('getTodoList:', this.todoList);
+    // console.log('getTodoList:', this.todoList);
   };
 
   //setTodoItem = () => {};
@@ -32,15 +29,15 @@ class TodoStore {
   addTodoItem = (todoItem) => {
     this.todoList.push(todoItem);
     console.log('TodoStore.addTodoItem:', todoItem);
-    const todos = JSON.parse(localStorage.getItem('todo'));
+    const todos = JSON.parse(localStorage.getItem(KEY_TODO));
     todos.push(todoItem);
-    localStorage.setItem('todo', JSON.stringify(todos));
+    localStorage.setItem(KEY_TODO, JSON.stringify(todos));
   };
 
   removeTodoItem = (id) => {
     this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
     console.log('TodoStore.removeTodoItem:', id);
-    localStorage.setItem('todo', JSON.stringify(this.todoList));
+    localStorage.setItem(KEY_TODO, JSON.stringify(this.todoList));
   };
 
   changeTodoItemStatus = (id) => {
@@ -52,7 +49,7 @@ class TodoStore {
       }
       return todoItem;
     });
-    localStorage.setItem('todo', JSON.stringify(this.todoList));
+    localStorage.setItem(KEY_TODO, JSON.stringify(this.todoList));
   };
 }
 
