@@ -30,13 +30,6 @@ class TodoStore {
 
     this.todoList = todoList;
 
-    // if (localStorage.getItem(KEY_TODO)) {
-    //   this.todoList = todoList;
-    // }
-    // } else {
-    //   localStorage.setItem(KEY_TODO, '[]');
-    // }
-
     // localStorage.getItem(KEY_TODO)
     //   ? (this.todoList = JSON.parse(localStorage.getItem(KEY_TODO)))
     //   : localStorage.setItem(KEY_TODO, '[]');

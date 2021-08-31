@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import TodoList from '../todo/TodoList';
 import TodoFormInput from '../todo/TodoFormInput';
 
-const Home = () => {
+const Home: React.FC = (): React.ReactElement => {
   return (
     <Fragment>
       <TodoFormInput />
