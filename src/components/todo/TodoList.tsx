@@ -7,7 +7,7 @@ type TProps = {
   title: string;
 };
 
-const TodoList: React.FC<TProps> = ({ title }) => {
+const TodoList: React.FC<TProps> = ({ title }): React.ReactElement => {
   React.useEffect(() => {
     TodoStore.getTodoList();
   }, []);
@@ -20,7 +20,6 @@ const TodoList: React.FC<TProps> = ({ title }) => {
         <TodoItem
           key={todoItem.todoID}
           todoItem={todoItem}
-          // isChecked={todoItem.isCompleted}
           onCheckBoxClick={() =>
             TodoStore.changeTodoItemStatus(todoItem.todoID)
           }
