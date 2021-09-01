@@ -1,13 +1,18 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from './routes';
-import { TAuthContext, AuthContext } from '../context/authContext';
+// import { TAuthContext, AuthContext } from '../context/authContext';
+import AuthStore, { IAuth } from '../stores/AuthStore';
+import { observer } from 'mobx-react-lite';
 
 const AppRouter: React.FC = () => {
-  const { isAuth }: TAuthContext = React.useContext<TAuthContext>(AuthContext);
-  console.log('isAuth:', isAuth);
+  // const { isAuth }: TAuthContext = React.useContext<TAuthContext>(AuthContext);
+  const auth: IAuth = AuthStore.auth;
+  // console.log('isAuth:', isAuth);
+  console.log('approuter isAuth:', auth.isAuth);
 
-  return isAuth ? (
+  // return isAuth ? (
+  return auth.isAuth ? (
     <div>
       <Switch>
         {privateRoutes.map((route) => (
@@ -38,4 +43,4 @@ const AppRouter: React.FC = () => {
   );
 };
 
-export default AppRouter;
+export default observer(AppRouter);
