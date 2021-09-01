@@ -2,8 +2,8 @@ import React from 'react';
 import CustomButton from '../button/CustomButton';
 import { TAuthContext, AuthContext } from '../context/authContext';
 
-const Logout: React.FC = (): React.ReactElement => {
-  const { isAuth, setIsAuth } = React.useContext<TAuthContext>(AuthContext);
+const Logout: React.FC = () => {
+  const { setIsAuth } = React.useContext<TAuthContext>(AuthContext);
   const logout = (): void => {
     setIsAuth(false);
     localStorage.removeItem('auth');
@@ -11,8 +11,7 @@ const Logout: React.FC = (): React.ReactElement => {
 
   return (
     <div style={{ marginTop: '30px' }}>
-      {/* <CustomButton onClick={logout}>Выход</CustomButton> */}
-      <button onClick={logout}>Выход</button>
+      <CustomButton onClick={logout}>Выход</CustomButton>
     </div>
   );
 };

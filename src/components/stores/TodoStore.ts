@@ -12,13 +12,6 @@ export type TTodo = {
 class TodoStore {
   todoList: TTodo[] = [];
 
-  // todoItem = {
-  //   userID: 0,
-  //   todoID: 0,
-  //   isCompleted: false,
-  //   todoText: '',
-  // };
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -40,7 +33,6 @@ class TodoStore {
   //setTodoItem = () => {};
 
   addTodoItem = (todoItem: TTodo) => {
-    // this.todoList.push(todoItem);
     console.log('TodoStore.addTodoItem:', todoItem);
     const todos: TTodo[] = JSON.parse(localStorage.getItem(KEY_TODO) || '[]');
     todos.push(todoItem);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const About: React.FC = (): React.ReactElement => {
+const About: React.FC = () => {
   return (
     <div>
       <h1>О сайте</h1>
@@ -10,16 +10,3 @@ const About: React.FC = (): React.ReactElement => {
 };
 
 export default About;
-
-// import React from 'react';
-
-// const About = () => {
-//   return (
-//     <div>
-//       <h1>О сайте</h1>
-//       <p>...</p>
-//     </div>
-//   );
-// };
-
-// export default About;
