@@ -3,8 +3,8 @@ import CustomInput from '../input/CustomInput';
 import CustomButton from '../button/CustomButton';
 import { TAuthContext, AuthContext } from '../context/authContext';
 
-const Login: React.FC = (): React.ReactElement => {
-  const { isAuth, setIsAuth } = React.useContext<TAuthContext>(AuthContext);
+const Login: React.FC = () => {
+  const { setIsAuth } = React.useContext<TAuthContext>(AuthContext);
 
   const loginHandler = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -23,7 +23,7 @@ const Login: React.FC = (): React.ReactElement => {
         ></CustomInput>
         <p>
           <CustomButton
-            style={{ height: '400px', width: '100px' }}
+            style={{ height: '40px', width: '100px' }}
             //onClick={login}
             type='submit'
           >

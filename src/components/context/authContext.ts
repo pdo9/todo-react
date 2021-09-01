@@ -9,7 +9,3 @@ export const AuthContext = React.createContext<TAuthContext>({
   isAuth: false,
   setIsAuth: () => {},
 });
-
-// import React from 'react';
-
-// export const AuthContext = React.createContext(null);
