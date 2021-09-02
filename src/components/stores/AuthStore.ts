@@ -1,4 +1,3 @@
-// import React from 'react';
 import { makeAutoObservable } from 'mobx';
 import { getAuthCredentials } from '../services/authService';
 
@@ -24,11 +23,11 @@ class AuthStore {
     makeAutoObservable(this);
   }
 
-  getAuthState = (): string[] | void => {
-    const auth: IAuthCredential = JSON.parse(
+  getAuthState = () => {
+    const currentAuthState: IAuthCredential = JSON.parse(
       localStorage.getItem('auth') || '{}'
     );
-    this.authState = auth;
+    this.authState = currentAuthState;
   };
 
   logIn = (userName: string, userPassword: string) => {

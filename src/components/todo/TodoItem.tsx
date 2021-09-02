@@ -22,7 +22,8 @@ const TodoItem: React.FC<TProps> = (props): React.ReactElement => {
       <div>
         <strong>
           {props.serialNumber}
-          {'. '} [id={props.todoItem.todoID}]{' '}
+          {'. '} [todoID={props.todoItem.todoID}] [userID=
+          {props.todoItem.userID}]{' '}
         </strong>
         {props.todoItem.todoText}
       </div>

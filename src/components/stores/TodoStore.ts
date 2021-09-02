@@ -22,15 +22,7 @@ class TodoStore {
     );
 
     this.todoList = todoList;
-
-    // localStorage.getItem(KEY_TODO)
-    //   ? (this.todoList = JSON.parse(localStorage.getItem(KEY_TODO)))
-    //   : localStorage.setItem(KEY_TODO, '[]');
-
-    // console.log('getTodoList:', this.todoList);
   };
-
-  //setTodoItem = () => {};
 
   addTodoItem = (todoItem: TTodo) => {
     console.log('TodoStore.addTodoItem:', todoItem);
