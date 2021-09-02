@@ -1,32 +1,37 @@
 import React from 'react';
 import CustomInput from '../input/CustomInput';
 import CustomButton from '../button/CustomButton';
-// import { TAuthContext, AuthContext } from '../context/authContext';
-import AuthStore, { IAuth } from '../stores/AuthStore';
+import AuthStore from '../stores/AuthStore';
+import { observer } from 'mobx-react-lite';
 
 const Login: React.FC = () => {
-  // const { setIsAuth } = React.useContext<TAuthContext>(AuthContext);
-
-  // const userName: string = '';
   const [userName, setUserName] = React.useState<string>('');
+  const [userPassword, setUserPassword] = React.useState<string>('');
 
   const loginHandler = (event: React.FormEvent): void => {
     event.preventDefault();
-    // setIsAuth(true);
-    AuthStore.logIn(userName);
-    // localStorage.setItem('auth', 'true');
-    console.log('userName:', userName);
+
+    if (userName && userPassword) {
+      AuthStore.logIn(userName, userPassword);
+    }
   };
 
   return (
     <div>
+      <h2 style={{ color: 'red' }}>
+        {AuthStore.authState.onAccessDeniedMessage}
+      </h2>
       <form onSubmit={loginHandler}>
-        <p>Вам необходимо авторизоваться</p>
+        <h2>Вам необходимо авторизоваться:</h2>
         <CustomInput
           type='text'
           placeholder='Введите имя пользователя'
-          // onChange={(event) => setUserName(event.target.value)}
-          onChange={(event) => setUserName(event.target.value)}
+          onChange={(event) => setUserName(event.target.value.trim())}
+        ></CustomInput>
+        <CustomInput
+          type='password'
+          placeholder='Введите пароль'
+          onChange={(event) => setUserPassword(event.target.value)}
         ></CustomInput>
         <p>
           <CustomButton
@@ -41,4 +46,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default observer(Login);

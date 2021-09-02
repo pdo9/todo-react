@@ -3,8 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Sidebar from './SidebarContent';
 import AppRouter from '../appRouter/AppRouter';
 // import { AuthContext } from '../context/authContext';
-import AuthStore, { IAuth } from '../stores/AuthStore';
-// import { observer } from 'mobx-react-lite';
+import AuthStore from '../stores/AuthStore';
 
 const BodyContent: React.FC = () => {
   // const [isAuth, setIsAuth] = React.useState<boolean>(false);
@@ -15,7 +14,7 @@ const BodyContent: React.FC = () => {
     //   //setIsAuth(true);
     // }
 
-    AuthStore.getAuth();
+    AuthStore.getAuthState();
   }, []);
 
   return (

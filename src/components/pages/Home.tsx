@@ -8,7 +8,9 @@ const Home: React.FC = () => {
   return (
     <Fragment>
       <TodoFormInput />
-      <TodoList title={`Ваш список заметок, ${AuthStore.auth.userName}:`} />
+      <TodoList
+        title={`Ваш список заметок, ${AuthStore.authState.userName}:`}
+      />
     </Fragment>
   );
 };
