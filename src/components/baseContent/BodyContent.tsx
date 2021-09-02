@@ -11,10 +11,11 @@ const BodyContent: React.FC = () => {
   // const auth: IAuth = AuthStore.auth;
 
   React.useEffect(() => {
-    if (localStorage.getItem('auth')) {
-      //setIsAuth(true);
-      AuthStore.logIn();
-    }
+    // if (localStorage.getItem('auth')) {
+    //   //setIsAuth(true);
+    // }
+
+    AuthStore.getAuth();
   }, []);
 
   return (

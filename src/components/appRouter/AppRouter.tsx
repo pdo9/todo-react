@@ -8,7 +8,6 @@ import { observer } from 'mobx-react-lite';
 const AppRouter: React.FC = () => {
   // const { isAuth }: TAuthContext = React.useContext<TAuthContext>(AuthContext);
   const auth: IAuth = AuthStore.auth;
-  // console.log('isAuth:', isAuth);
   console.log('approuter isAuth:', auth.isAuth);
 
   // return isAuth ? (

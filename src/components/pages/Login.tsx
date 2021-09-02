@@ -8,12 +8,14 @@ const Login: React.FC = () => {
   // const { setIsAuth } = React.useContext<TAuthContext>(AuthContext);
 
   // const userName: string = '';
+  const [userName, setUserName] = React.useState<string>('');
 
   const loginHandler = (event: React.FormEvent): void => {
     event.preventDefault();
     // setIsAuth(true);
-    AuthStore.logIn();
+    AuthStore.logIn(userName);
     // localStorage.setItem('auth', 'true');
+    console.log('userName:', userName);
   };
 
   return (
@@ -24,11 +26,11 @@ const Login: React.FC = () => {
           type='text'
           placeholder='Введите имя пользователя'
           // onChange={(event) => setUserName(event.target.value)}
+          onChange={(event) => setUserName(event.target.value)}
         ></CustomInput>
         <p>
           <CustomButton
             style={{ height: '40px', width: '100px' }}
-            //onClick={login}
             type='submit'
           >
             Вход
