@@ -9,6 +9,9 @@ type TProps = {
   onRemoveButtonClick: () => void;
 };
 
+/**
+ * Элемент todo
+ */
 const TodoItem: React.FC<TProps> = (props): React.ReactElement => {
   return (
     <div className='todo-item'>

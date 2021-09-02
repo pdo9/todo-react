@@ -2,6 +2,9 @@ import React from 'react';
 import TodoStore, { TTodo } from '../stores/TodoStore';
 import AuthStore from '../stores/AuthStore';
 
+/**
+ * Форма добавления элемента todo
+ */
 const TodoFormInput: React.FC = () => {
   let currentUserID: number = AuthStore.authState.userID;
 

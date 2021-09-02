@@ -4,6 +4,9 @@ import TodoList from '../todo/TodoList';
 import TodoFormInput from '../todo/TodoFormInput';
 import AuthStore from '../stores/AuthStore';
 
+/**
+ * "Главная" страница с основным содержимым
+ */
 const Home: React.FC = () => {
   return (
     <Fragment>

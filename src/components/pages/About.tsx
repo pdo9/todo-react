@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Страница "О сайте"
+ */
 const About: React.FC = () => {
   return (
     <div>

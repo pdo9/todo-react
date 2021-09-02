@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Шапка
+ */
 const HeaderBase: React.FC = () => {
   return (
     <header className='header'>

@@ -1,9 +1,12 @@
 import React from 'react';
-import CustomInput from '../input/CustomInput';
-import CustomButton from '../button/CustomButton';
+import CustomInput from '../UI/input/CustomInput';
+import CustomButton from '../UI/button/CustomButton';
 import AuthStore from '../stores/AuthStore';
 import { observer } from 'mobx-react-lite';
 
+/**
+ * Страница авторизации
+ */
 const Login: React.FC = () => {
   const [userName, setUserName] = React.useState<string>('');
   const [userPassword, setUserPassword] = React.useState<string>('');

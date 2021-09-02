@@ -11,13 +11,18 @@ type TRoute = {
   isPrivate: boolean;
 };
 
+/**
+ * Приватные маршруты
+ */
 export const privateRoutes: TRoute[] = [
   { path: '/', component: Home, isExact: true, isPrivate: true },
   { path: '/about', component: About, isExact: true, isPrivate: true },
-  // { path: '/login', component: Login, isExact: true, isPrivate: true },
   { path: '/logout', component: Logout, isExact: true, isPrivate: true },
 ];
 
+/**
+ * Общедоступные маршруты
+ */
 export const publicRoutes: TRoute[] = [
   { path: '/about', component: About, isExact: true, isPrivate: false },
   { path: '/login', component: Login, isExact: true, isPrivate: false },

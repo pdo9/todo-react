@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Боковое меню
+ */
 const SidebarBase: React.FC = () => {
   return (
     <aside className='sidebar'>

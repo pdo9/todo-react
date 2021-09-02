@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-
-const KEY_TODO = 'todo';
+import { LOCALSTORAGE_KEYS } from '../utils/constants';
 
 export type TTodo = {
   userID: number;
@@ -16,28 +15,45 @@ class TodoStore {
     makeAutoObservable(this);
   }
 
+  /**
+   * Получение списка todo
+   */
   getTodoList = () => {
     const todoList: TTodo[] = JSON.parse(
-      localStorage.getItem(KEY_TODO) || '[]'
+      localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     );
 
     this.todoList = todoList;
   };
 
+  /**
+   * Добавление элемента todo
+   */
   addTodoItem = (todoItem: TTodo) => {
     console.log('TodoStore.addTodoItem:', todoItem);
-    const todos: TTodo[] = JSON.parse(localStorage.getItem(KEY_TODO) || '[]');
+    const todos: TTodo[] = JSON.parse(
+      localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
+    );
     todos.push(todoItem);
-    localStorage.setItem(KEY_TODO, JSON.stringify(todos));
+    localStorage.setItem(LOCALSTORAGE_KEYS.KEY_TODO, JSON.stringify(todos));
     this.getTodoList();
   };
 
+  /**
+   * Удаление элемента todo
+   */
   removeTodoItem = (id: number) => {
     this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
     console.log('TodoStore.removeTodoItem:', id);
-    localStorage.setItem(KEY_TODO, JSON.stringify(this.todoList));
+    localStorage.setItem(
+      LOCALSTORAGE_KEYS.KEY_TODO,
+      JSON.stringify(this.todoList)
+    );
   };
 
+  /**
+   * Изменение статуса элемента todo
+   */
   changeTodoItemStatus = (id: number) => {
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === id) {
@@ -47,7 +63,10 @@ class TodoStore {
       }
       return todoItem;
     });
-    localStorage.setItem(KEY_TODO, JSON.stringify(this.todoList));
+    localStorage.setItem(
+      LOCALSTORAGE_KEYS.KEY_TODO,
+      JSON.stringify(this.todoList)
+    );
   };
 }
 

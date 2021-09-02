@@ -8,6 +8,9 @@ type TProps = {
   title: string;
 };
 
+/**
+ * Список todo
+ */
 const TodoList: React.FC<TProps> = ({ title }): React.ReactElement => {
   React.useEffect(() => {
     TodoStore.getTodoList();

@@ -1,13 +1,12 @@
 import React from 'react';
-import CustomButton from '../button/CustomButton';
-// import { TAuthContext, AuthContext } from '../context/authContext';
+import CustomButton from '../UI/button/CustomButton';
 import AuthStore from '../stores/AuthStore';
 
+/**
+ * Страница выхода из системы
+ */
 const Logout: React.FC = () => {
-  // const { setIsAuth } = React.useContext<TAuthContext>(AuthContext);
   const logout = (): void => {
-    // setIsAuth(false);
-    // localStorage.removeItem('auth');
     AuthStore.logOut();
   };
 

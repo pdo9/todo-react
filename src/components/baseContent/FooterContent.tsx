@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Подвал
+ */
 const FooterBase: React.FC = () => {
   return (
     <footer className='footer'>
@@ -10,7 +13,9 @@ const FooterBase: React.FC = () => {
   );
 };
 
-//текст для подвала
+/**
+ * Возвращает текст для подвала в формате "ГГГГ - ГГГГ"
+ */
 const getFooterText = (): string => {
   let footerText: string = '';
   const startYear: number = 2021;
