@@ -2,12 +2,15 @@ import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import TodoList from '../todo/TodoList';
 import TodoFormInput from '../todo/TodoFormInput';
+import AuthStore from '../stores/AuthStore';
 
 const Home: React.FC = () => {
   return (
     <Fragment>
       <TodoFormInput />
-      <TodoList title='Ваш список заметок:' />
+      <TodoList
+        title={`Ваш список заметок, ${AuthStore.authState.userName}:`}
+      />
     </Fragment>
   );
 };

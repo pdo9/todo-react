@@ -1,8 +1,9 @@
 import React from 'react';
 import TodoStore, { TTodo } from '../stores/TodoStore';
+import AuthStore from '../stores/AuthStore';
 
 const TodoFormInput: React.FC = () => {
-  let currentUserID: number = 1;
+  let currentUserID: number = AuthStore.authState.userID;
 
   const [newTodoItem, setNewTodoItem] = React.useState<TTodo>({
     userID: 0,
