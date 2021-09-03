@@ -15,27 +15,29 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     if (userName && userPassword) {
-      AuthStore.logIn(userName, userPassword);
+      AuthStore.signIn(userName, userPassword);
     }
   };
 
   return (
     <div>
-      <h2 style={{ color: 'red' }}>
-        {AuthStore.authState.onAccessDeniedMessage}
-      </h2>
+      {AuthStore.authState.onAccessDeniedMessage && (
+        <h2 style={{ color: 'red' }}>
+          {AuthStore.authState.onAccessDeniedMessage}
+        </h2>
+      )}
       <form onSubmit={loginHandler}>
         <h2>Вам необходимо авторизоваться:</h2>
         <CustomInput
           type='text'
           placeholder='Введите имя пользователя'
           onChange={(event) => setUserName(event.target.value.trim())}
-        ></CustomInput>
+        />
         <CustomInput
           type='password'
           placeholder='Введите пароль'
           onChange={(event) => setUserPassword(event.target.value)}
-        ></CustomInput>
+        />
         <p>
           <CustomButton
             style={{ height: '40px', width: '100px' }}

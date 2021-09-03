@@ -4,26 +4,24 @@ import TodoItem from './TodoItem';
 import TodoStore from '../stores/TodoStore';
 import AuthStore from '../stores/AuthStore';
 
-type TProps = {
-  title: string;
-};
-
 /**
  * Список todo
  */
-const TodoList: React.FC<TProps> = ({ title }): React.ReactElement => {
+const TodoList: React.FC = () => {
   React.useEffect(() => {
     TodoStore.getTodoList();
   }, []);
 
   return (
     <React.Fragment>
-      <h2 style={{ textAlign: 'center' }}>{title}</h2>
+      <h2
+        style={{ textAlign: 'center' }}
+      >{`Ваш список заметок, ${AuthStore.authState.userName}:`}</h2>
 
       {TodoStore.todoList
-        .filter(
-          (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
-        )
+        // .filter(
+        //   (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
+        // )
         .map((todoItem, index) => (
           <TodoItem
             key={todoItem.todoID}
@@ -34,6 +32,10 @@ const TodoList: React.FC<TProps> = ({ title }): React.ReactElement => {
             onRemoveButtonClick={() =>
               TodoStore.removeTodoItem(todoItem.todoID)
             }
+            onTodoItemDoublecClick={() => {
+              TodoStore.currentTodoItem = todoItem;
+              TodoStore.isInEditMode = true;
+            }}
             serialNumber={index + 1}
           />
         ))}

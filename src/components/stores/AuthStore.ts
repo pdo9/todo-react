@@ -6,36 +6,21 @@ import { LOCALSTORAGE_KEYS } from '../utils/constants';
  * Описание учетных данных авторизации
  */
 export interface IAuthCredential {
-  /**
-   * Разрешен ли вход в систему
-   */
   isAccessAllowed: boolean;
-
-  /**
-   * Статустные сообщения
-   */
   statusMessage: string[];
-
-  /**
-   * ID пользователя
-   */
   userID: number;
-
-  /**
-   * Имя пользователя
-   */
   userName: string;
-
-  /**
-   * Пароль пользователя
-   */
   userPassword: string;
-
-  /**
-   * Сообщение с причиной запрщенного доступа для вывода на страницу
-   */
   onAccessDeniedMessage?: string;
 }
+
+const authStateEmpty: IAuthCredential = {
+  isAccessAllowed: false,
+  statusMessage: [''],
+  userID: -1,
+  userName: '',
+  userPassword: '',
+};
 
 /**
  * Авторизация в системе
@@ -44,13 +29,7 @@ class AuthStore {
   /**
    * Текущее состояние авторизации
    */
-  authState: IAuthCredential = {
-    isAccessAllowed: false,
-    statusMessage: [''],
-    userID: -1,
-    userName: '',
-    userPassword: '',
-  };
+  authState: IAuthCredential = authStateEmpty;
 
   constructor() {
     makeAutoObservable(this);
@@ -71,7 +50,7 @@ class AuthStore {
    * @param userName Имя пользователя
    * @param userPassword Пароль пользователя
    */
-  logIn = (userName: string, userPassword: string) => {
+  signIn = (userName: string, userPassword: string) => {
     const authCredential = getAuthCredentials(userName, userPassword);
     console.log('authCredential:', authCredential);
 
@@ -90,14 +69,8 @@ class AuthStore {
   /**
    * Выход из системы
    */
-  logOut = () => {
-    this.authState = {
-      isAccessAllowed: false,
-      statusMessage: [''],
-      userID: -1,
-      userName: '',
-      userPassword: '',
-    };
+  signOut = () => {
+    this.authState = authStateEmpty;
     localStorage.removeItem(LOCALSTORAGE_KEYS.KEY_AUTH);
   };
 }

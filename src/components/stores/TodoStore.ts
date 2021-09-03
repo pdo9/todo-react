@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { LOCALSTORAGE_KEYS } from '../utils/constants';
+import AuthStore from '../stores/AuthStore';
 
 export type TTodo = {
   userID: number;
@@ -11,6 +12,17 @@ export type TTodo = {
 class TodoStore {
   todoList: TTodo[] = [];
 
+  isInEditMode: boolean = false;
+
+  currentTodoItem: TTodo = {
+    userID: 0,
+    todoID: 0,
+    isCompleted: false,
+    todoText: '',
+  };
+
+  filterValue: string = '';
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -19,11 +31,21 @@ class TodoStore {
    * Получение списка todo
    */
   getTodoList = () => {
-    const todoList: TTodo[] = JSON.parse(
+    let todoList: TTodo[] = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     );
 
-    this.todoList = todoList;
+    // if (this.filterValue) {
+    //   todoList = todoList.filter(
+    //     (itemByUserID) => itemByUserID.todoText.indexOf(this.filterValue) !== -1
+    //   );
+    // }
+
+    //asc/desc
+
+    this.todoList = todoList.filter(
+      (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
+    );
   };
 
   /**
@@ -43,18 +65,29 @@ class TodoStore {
    * Удаление элемента todo
    */
   removeTodoItem = (id: number) => {
+    this.isInEditMode = true;
     this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
     console.log('TodoStore.removeTodoItem:', id);
     localStorage.setItem(
       LOCALSTORAGE_KEYS.KEY_TODO,
       JSON.stringify(this.todoList)
     );
+
+    this.isInEditMode = false;
+    this.currentTodoItem = {
+      userID: 0,
+      todoID: 0,
+      isCompleted: false,
+      todoText: '',
+    };
   };
 
   /**
    * Изменение статуса элемента todo
    */
   changeTodoItemStatus = (id: number) => {
+    this.isInEditMode = true;
+
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === id) {
         console.log('BEFORE TodoStore.changeTodoItemStatus:', todoItem);
@@ -67,6 +100,43 @@ class TodoStore {
       LOCALSTORAGE_KEYS.KEY_TODO,
       JSON.stringify(this.todoList)
     );
+
+    this.isInEditMode = false;
+    this.currentTodoItem = {
+      userID: 0,
+      todoID: 0,
+      isCompleted: false,
+      todoText: '',
+    };
+  };
+
+  /**
+   * Изменение текста todo
+   */
+  changeTodoItemText = (todoItem: TTodo, text: string) => {
+    this.isInEditMode = true;
+    this.currentTodoItem = todoItem;
+    console.log('currentEditingTodoItemId:', this.currentTodoItem);
+
+    this.todoList = this.todoList.map((todoItem) => {
+      if (todoItem.todoID === this.currentTodoItem.todoID) {
+        todoItem.todoText = text;
+      }
+      return todoItem;
+    });
+
+    localStorage.setItem(
+      LOCALSTORAGE_KEYS.KEY_TODO,
+      JSON.stringify(this.todoList)
+    );
+
+    this.isInEditMode = false;
+    this.currentTodoItem = {
+      userID: 0,
+      todoID: 0,
+      isCompleted: false,
+      todoText: '',
+    };
   };
 }
 

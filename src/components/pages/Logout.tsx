@@ -7,7 +7,7 @@ import AuthStore from '../stores/AuthStore';
  */
 const Logout: React.FC = () => {
   const logout = (): void => {
-    AuthStore.logOut();
+    AuthStore.signOut();
   };
 
   return (

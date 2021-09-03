@@ -7,14 +7,18 @@ type TProps = {
   serialNumber: number;
   onCheckBoxClick: () => void;
   onRemoveButtonClick: () => void;
+  onTodoItemDoublecClick: () => void;
 };
 
 /**
  * Элемент todo
  */
-const TodoItem: React.FC<TProps> = (props): React.ReactElement => {
+const TodoItem: React.FC<TProps> = (props) => {
   return (
-    <div className='todo-item'>
+    <div
+      className='todo-item'
+      onDoubleClick={() => props.onTodoItemDoublecClick()}
+    >
       <div>
         <input
           type='checkBox'
@@ -25,8 +29,7 @@ const TodoItem: React.FC<TProps> = (props): React.ReactElement => {
       <div>
         <strong>
           {props.serialNumber}
-          {'. '} [todoID={props.todoItem.todoID}] [userID=
-          {props.todoItem.userID}]{' '}
+          {'. '} [userID={props.todoItem.userID}]{' '}
         </strong>
         {props.todoItem.todoText}
       </div>

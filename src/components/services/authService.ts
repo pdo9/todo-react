@@ -32,13 +32,13 @@ export const getAuthCredentials = (
   userName: string,
   userPassword: string
 ): IAuthCredential => {
-  let authCredential: IAuthCredential = {
-    isAccessAllowed: false,
-    statusMessage: [],
-    userID: 0,
-    userName: '',
-    userPassword: '',
-  };
+  // let authCredential: IAuthCredential = {
+  //   isAccessAllowed: false,
+  //   statusMessage: [],
+  //   userID: 0,
+  //   userName: '',
+  //   userPassword: '',
+  // };
 
   let status: string[] = [];
 
@@ -54,7 +54,7 @@ export const getAuthCredentials = (
     ? status.push('USER_PASSWORD_CORRECT')
     : status.push('USER_PASSWORD_INCORRECT');
 
-  authCredential = {
+  const authCredential = {
     isAccessAllowed: isUserExists && isPasswordCorrect,
     statusMessage: status,
     userID: currentUser?.userID || 0,

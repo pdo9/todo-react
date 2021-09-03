@@ -4,6 +4,9 @@ import About from '../pages/About';
 import Login from '../pages/Login';
 import Logout from '../pages/Logout';
 
+/**
+ * Описание маршрута
+ */
 type TRoute = {
   path: string;
   component: React.FC;
