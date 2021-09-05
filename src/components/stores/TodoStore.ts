@@ -22,6 +22,7 @@ class TodoStore {
   };
 
   filterValue: string = '';
+  sortValue: string = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -31,39 +32,45 @@ class TodoStore {
    * Получение списка todo
    */
   getTodoList = () => {
-    console.log('getTodoList  filterValue:', this.filterValue);
+    console.log('filterValue:', this.filterValue);
+    console.log('sortValue:', this.sortValue);
 
+    //исходный список из localStorage
     let filteredTodoList: TTodo[] = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     );
 
+    //фильтрация по ID пользователя
     filteredTodoList = filteredTodoList.filter(
       (todoItem) => todoItem.userID === AuthStore.authState.userID
     );
 
+    //фильтрация по строке поиска
     if (this.filterValue) {
       filteredTodoList = filteredTodoList.filter((todoItem) =>
         todoItem.todoText.includes(this.filterValue)
       );
     }
 
+    //сортировка выбранным методом
+    if (this.sortValue) {
+      switch (this.sortValue) {
+        case 'ASC':
+          filteredTodoList.sort();
+          break;
+        case 'DESC':
+          filteredTodoList.reverse();
+          break;
+        default:
+          break;
+      }
+
+      // this.sortValue === 'ASC'
+      //   ? filteredTodoList.sort()
+      //   : filteredTodoList.reverse();
+    }
+
     this.todoList = filteredTodoList;
-
-    // let todoList: TTodo[] = JSON.parse(
-    //   localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
-    // );
-
-    // if (this.filterValue) {
-    //   todoList = todoList.filter(
-    //     (todoItem) => todoItem.todoText.indexOf(this.filterValue) !== -1
-    //   );
-    // }
-
-    //asc/desc
-
-    // this.todoList = todoList.filter(
-    //   (todoItem) => todoItem.userID === AuthStore.authState.userID
-    // );
   };
 
   /**
