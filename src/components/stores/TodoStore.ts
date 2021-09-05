@@ -31,21 +31,39 @@ class TodoStore {
    * Получение списка todo
    */
   getTodoList = () => {
-    let todoList: TTodo[] = JSON.parse(
+    console.log('getTodoList  filterValue:', this.filterValue);
+
+    let filteredTodoList: TTodo[] = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     );
 
+    filteredTodoList = filteredTodoList.filter(
+      (todoItem) => todoItem.userID === AuthStore.authState.userID
+    );
+
+    if (this.filterValue) {
+      filteredTodoList = filteredTodoList.filter((todoItem) =>
+        todoItem.todoText.includes(this.filterValue)
+      );
+    }
+
+    this.todoList = filteredTodoList;
+
+    // let todoList: TTodo[] = JSON.parse(
+    //   localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
+    // );
+
     // if (this.filterValue) {
     //   todoList = todoList.filter(
-    //     (itemByUserID) => itemByUserID.todoText.indexOf(this.filterValue) !== -1
+    //     (todoItem) => todoItem.todoText.indexOf(this.filterValue) !== -1
     //   );
     // }
 
     //asc/desc
 
-    this.todoList = todoList.filter(
-      (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
-    );
+    // this.todoList = todoList.filter(
+    //   (todoItem) => todoItem.userID === AuthStore.authState.userID
+    // );
   };
 
   /**
