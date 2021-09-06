@@ -1,33 +1,36 @@
 import React from 'react';
 import CustomButton from '../UI/button/CustomButton';
 import TodoStore from '../stores/TodoStore';
-import { observer } from 'mobx-react-lite';
+// import { observer } from 'mobx-react-lite';
+import { SORT_KEYS } from '../utils/constants';
 
 const TodoFilter = () => {
-  const [filterValue, setFilterValue] = React.useState('');
+  const [serachValue, setSearchValue] = React.useState('');
   const [sortValue, setsortValue] = React.useState('');
 
   React.useEffect(() => {
-    TodoStore.filterValue = filterValue;
+    TodoStore.searchValue = serachValue;
     TodoStore.sortValue = sortValue;
 
     TodoStore.getTodoList();
-  }, [filterValue, sortValue]);
+  }, [serachValue, sortValue]);
 
-  const filterHandler = (event: any): void => {
+  const searchHandler = (event: any): void => {
     event.preventDefault();
-    setFilterValue(event.target.value);
+    setSearchValue(event.target.value);
+    console.log('searchHandler');
     // TodoStore.filterValue = filterValue;
     // TodoStore.getTodoList();
   };
 
   const sortHandler = (event: any): void => {
     setsortValue(event.target.value);
+    console.log('sortHandler');
   };
 
   const resetFiltres = () => {
     console.log('reset filters');
-    setFilterValue('');
+    setSearchValue('');
     setsortValue('');
   };
 
@@ -38,19 +41,40 @@ const TodoFilter = () => {
         <input
           className='todo-input'
           placeholder='Введите текст для поиска'
-          value={filterValue}
-          onChange={(event) => filterHandler(event)}
+          value={serachValue}
+          onChange={(event) => searchHandler(event)}
         />
         <p>
           <select
             className='todo-input'
             value={sortValue}
-            // onChange={(event) => setsortValue(event.target.value)}
             onChange={sortHandler}
           >
             <option disabled>Сортировка</option>
-            <option value={'ASC'}>По возрастанию</option>
-            <option value={'DESC'}>По убыванию</option>
+
+            <option value={SORT_KEYS.DATE_ASC}>
+              По дате добавления (сначала старые)
+            </option>
+
+            <option value={SORT_KEYS.DATE_DESC}>
+              По дате добавления (сначала новые)
+            </option>
+
+            <option value={SORT_KEYS.LOCALECOMPARE_ASC}>
+              По содержанию (в алфавитном порядке)
+            </option>
+
+            <option value={SORT_KEYS.LOCALECOMPARE_DESC}>
+              По содержанию (в обратном алфавитном порядке)
+            </option>
+
+            <option value={SORT_KEYS.IS_COMPLETED_ASC}>
+              По статусу (сначала выполненные)
+            </option>
+
+            <option value={SORT_KEYS.IS_COMPLETED_DESC}>
+              По статусу (сначала невыполненные)
+            </option>
           </select>
         </p>
         <CustomButton style={{ marginTop: '15px' }} onClick={resetFiltres}>

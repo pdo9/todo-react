@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { LOCALSTORAGE_KEYS } from '../utils/constants';
+import { LOCALSTORAGE_KEYS, SORT_KEYS } from '../utils/constants';
 import AuthStore from '../stores/AuthStore';
 
 export type TTodo = {
@@ -12,6 +12,8 @@ export type TTodo = {
 class TodoStore {
   todoList: TTodo[] = [];
 
+  filteredTodoList: TTodo[] = [];
+
   isInEditMode: boolean = false;
 
   currentTodoItem: TTodo = {
@@ -21,7 +23,7 @@ class TodoStore {
     todoText: '',
   };
 
-  filterValue: string = '';
+  searchValue: string = '';
   sortValue: string = '';
 
   constructor() {
@@ -32,45 +34,79 @@ class TodoStore {
    * Получение списка todo
    */
   getTodoList = () => {
-    console.log('filterValue:', this.filterValue);
+    console.log('filterValue:', this.searchValue);
     console.log('sortValue:', this.sortValue);
 
     //исходный список из localStorage
-    let filteredTodoList: TTodo[] = JSON.parse(
+    this.todoList = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     );
 
+    this.filteredTodoList = this.todoList;
+
     //фильтрация по ID пользователя
-    filteredTodoList = filteredTodoList.filter(
+    this.filteredTodoList = this.filteredTodoList.filter(
       (todoItem) => todoItem.userID === AuthStore.authState.userID
     );
 
     //фильтрация по строке поиска
-    if (this.filterValue) {
-      filteredTodoList = filteredTodoList.filter((todoItem) =>
-        todoItem.todoText.includes(this.filterValue)
+    if (this.searchValue) {
+      this.filteredTodoList = this.filteredTodoList.filter((todoItem) =>
+        todoItem.todoText.includes(this.searchValue)
       );
     }
 
     //сортировка выбранным методом
     if (this.sortValue) {
       switch (this.sortValue) {
-        case 'ASC':
-          filteredTodoList.sort();
+        case SORT_KEYS.DATE_ASC:
+          this.filteredTodoList.sort();
           break;
-        case 'DESC':
-          filteredTodoList.reverse();
+
+        case SORT_KEYS.DATE_DESC:
+          this.filteredTodoList.reverse();
           break;
+
+        case SORT_KEYS.LOCALECOMPARE_ASC:
+          this.filteredTodoList.sort((a, b) => {
+            return a.todoText.localeCompare(b.todoText);
+          });
+          break;
+
+        case SORT_KEYS.LOCALECOMPARE_DESC:
+          this.filteredTodoList.sort((a, b) => {
+            return b.todoText.localeCompare(a.todoText);
+          });
+          break;
+
+        case SORT_KEYS.IS_COMPLETED_ASC:
+          this.filteredTodoList.sort((a, b) => {
+            if (a.isCompleted) {
+              return -1;
+            }
+            if (b.isCompleted) {
+              return 1;
+            }
+            return 0;
+          });
+          break;
+
+        case SORT_KEYS.IS_COMPLETED_DESC:
+          this.filteredTodoList.sort((a, b) => {
+            if (a.isCompleted) {
+              return 1;
+            }
+            if (b.isCompleted) {
+              return -1;
+            }
+            return 0;
+          });
+          break;
+
         default:
           break;
       }
-
-      // this.sortValue === 'ASC'
-      //   ? filteredTodoList.sort()
-      //   : filteredTodoList.reverse();
     }
-
-    this.todoList = filteredTodoList;
   };
 
   /**
@@ -98,6 +134,7 @@ class TodoStore {
       JSON.stringify(this.todoList)
     );
 
+    this.getTodoList();
     this.isInEditMode = false;
     this.currentTodoItem = {
       userID: 0,
@@ -126,6 +163,7 @@ class TodoStore {
       JSON.stringify(this.todoList)
     );
 
+    this.getTodoList();
     this.isInEditMode = false;
     this.currentTodoItem = {
       userID: 0,
@@ -155,6 +193,7 @@ class TodoStore {
       JSON.stringify(this.todoList)
     );
 
+    this.getTodoList();
     this.isInEditMode = false;
     this.currentTodoItem = {
       userID: 0,

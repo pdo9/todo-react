@@ -18,27 +18,30 @@ const TodoList: React.FC = () => {
         style={{ textAlign: 'center' }}
       >{`Ваш список заметок, ${AuthStore.authState.userName}:`}</h2>
 
-      {TodoStore.todoList
-        // .filter(
-        //   (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
-        // )
-        .map((todoItem, index) => (
-          <TodoItem
-            key={todoItem.todoID}
-            todoItem={todoItem}
-            onCheckBoxClick={() =>
-              TodoStore.changeTodoItemStatus(todoItem.todoID)
-            }
-            onRemoveButtonClick={() =>
-              TodoStore.removeTodoItem(todoItem.todoID)
-            }
-            onTodoItemDoublecClick={() => {
-              TodoStore.currentTodoItem = todoItem;
-              TodoStore.isInEditMode = true;
-            }}
-            serialNumber={index + 1}
-          />
-        ))}
+      {
+        //TodoStore.todoList
+        TodoStore.filteredTodoList
+          // .filter(
+          //   (itemByUserID) => itemByUserID.userID === AuthStore.authState.userID
+          // )
+          .map((todoItem, index) => (
+            <TodoItem
+              key={todoItem.todoID}
+              todoItem={todoItem}
+              onCheckBoxClick={() =>
+                TodoStore.changeTodoItemStatus(todoItem.todoID)
+              }
+              onRemoveButtonClick={() =>
+                TodoStore.removeTodoItem(todoItem.todoID)
+              }
+              onTodoItemDoublecClick={() => {
+                TodoStore.currentTodoItem = todoItem;
+                TodoStore.isInEditMode = true;
+              }}
+              serialNumber={index + 1}
+            />
+          ))
+      }
     </React.Fragment>
   );
 };
