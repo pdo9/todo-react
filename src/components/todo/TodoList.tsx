@@ -9,7 +9,15 @@ import AuthStore from '../stores/AuthStore';
  */
 const TodoList: React.FC = () => {
   React.useEffect(() => {
+    const log = (event: StorageEvent) => {
+      console.log(event);
+    };
+
+    window.addEventListener('storage', log);
     TodoStore.getTodoList();
+    return () => {
+      window.removeEventListener('storage', log);
+    };
   }, []);
 
   return (

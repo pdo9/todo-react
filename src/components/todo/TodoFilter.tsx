@@ -1,37 +1,29 @@
 import React from 'react';
 import CustomButton from '../UI/button/CustomButton';
 import TodoStore from '../stores/TodoStore';
-// import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import { SORT_KEYS } from '../utils/constants';
 
 const TodoFilter = () => {
-  const [serachValue, setSearchValue] = React.useState('');
-  const [sortValue, setsortValue] = React.useState('');
-
   React.useEffect(() => {
-    TodoStore.searchValue = serachValue;
-    TodoStore.sortValue = sortValue;
-
     TodoStore.getTodoList();
-  }, [serachValue, sortValue]);
+  }, [TodoStore.searchValue, TodoStore.sortValue]); // eslint-disable-line
 
   const searchHandler = (event: any): void => {
-    event.preventDefault();
-    setSearchValue(event.target.value);
-    console.log('searchHandler');
-    // TodoStore.filterValue = filterValue;
-    // TodoStore.getTodoList();
+    //event.preventDefault();
+    TodoStore.searchValue = event.target.value;
+    console.log('searchHandler', TodoStore.searchValue);
   };
 
   const sortHandler = (event: any): void => {
-    setsortValue(event.target.value);
+    TodoStore.sortValue = event.target.value;
     console.log('sortHandler');
   };
 
   const resetFiltres = () => {
     console.log('reset filters');
-    setSearchValue('');
-    setsortValue('');
+    TodoStore.searchValue = '';
+    TodoStore.sortValue = '';
   };
 
   return (
@@ -41,13 +33,13 @@ const TodoFilter = () => {
         <input
           className='todo-input'
           placeholder='Введите текст для поиска'
-          value={serachValue}
+          value={TodoStore.searchValue}
           onChange={(event) => searchHandler(event)}
         />
         <p>
           <select
             className='todo-input'
-            value={sortValue}
+            value={TodoStore.sortValue}
             onChange={sortHandler}
           >
             <option disabled>Сортировка</option>
@@ -85,5 +77,4 @@ const TodoFilter = () => {
   );
 };
 
-// export default observer(TodoFilter);
-export default TodoFilter;
+export default observer(TodoFilter);

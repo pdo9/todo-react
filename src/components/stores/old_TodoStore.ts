@@ -17,92 +17,22 @@ const emptyTodoItem: ITodoItem = {
 };
 
 class TodoStore {
-  private _todoList: ITodoItem[] = [];
-  private _filteredTodoList: ITodoItem[] = [];
-
-  private _isInEditMode: boolean = false;
-  private _currentTodoItem: ITodoItem = emptyTodoItem;
-
-  private _searchValue: string = '';
-  private _sortValue: string = '';
+  todoList: ITodoItem[] = [];
+  filteredTodoList: ITodoItem[] = [];
+  isInEditMode: boolean = false;
+  currentTodoItem: ITodoItem = emptyTodoItem;
+  searchValue: string = '';
+  sortValue: string = '';
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  get todoList() {
-    const data: ITodoItem[] = this._todoList;
-    //sort...
-    return data;
-  }
-
-  set todoList(data: ITodoItem[]) {
-    this._todoList = data;
-  }
-
-  get filteredTodoList() {
-    return this._filteredTodoList;
-  }
-
-  set filteredTodoList(value: ITodoItem[]) {
-    this._filteredTodoList = value;
-  }
-
-  /**
-   * Выбранный для редактирования todoItem
-   */
-  get currentTodoItem() {
-    return this._currentTodoItem;
-  }
-
-  /**
-   * Выбранный для редактирования todoItem
-   */
-  set currentTodoItem(value: ITodoItem) {
-    this._currentTodoItem = value;
-  }
-
-  /**
-   * Режим редактирования todoItem
-   */
-  get isInEditMode() {
-    return this._isInEditMode;
-  }
-
-  /**
-   * Режим редактирования todoItem
-   */
-  set isInEditMode(value: boolean) {
-    this._isInEditMode = value;
-  }
-
-  /**
-   * Строка поиска
-   */
-  get searchValue() {
-    return this._searchValue;
-  }
-
-  /**
-   * Строка поиска
-   */
-  set searchValue(value: string) {
-    this._searchValue = value;
-  }
-
-  /**
-   * Метод сортировки
-   */
-  get sortValue() {
-    return this._sortValue;
-  }
-
-  /**
-   * Метод сортировки
-   */
-  set sortValue(value: string) {
-    this._sortValue = value;
-  }
+  // get todoList() {
+  //   const data = this._todoList;
+  //   //sort...
+  //   return data;
+  // }
 
   /**
    * Получение списка todo
@@ -224,7 +154,7 @@ class TodoStore {
       JSON.stringify(this.todoList)
     );
 
-    this.getTodoList();
+    // this.getTodoList();
     this.isInEditMode = false;
     this.currentTodoItem = emptyTodoItem;
   };
