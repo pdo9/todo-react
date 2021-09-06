@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { TTodo } from '../stores/TodoStore';
+import { ITodoItem } from '../stores/TodoStore';
 
 type TProps = {
-  todoItem: TTodo;
+  todoItem: ITodoItem;
   serialNumber: number;
   onCheckBoxClick: () => void;
   onRemoveButtonClick: () => void;

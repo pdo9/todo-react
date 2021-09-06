@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoStore, { TTodo } from '../stores/TodoStore';
+import TodoStore, { ITodoItem } from '../stores/TodoStore';
 import AuthStore from '../stores/AuthStore';
 import { observer } from 'mobx-react-lite';
 
@@ -9,7 +9,7 @@ import { observer } from 'mobx-react-lite';
 const TodoFormInput: React.FC = () => {
   let currentUserID: number = AuthStore.authState.userID;
 
-  const [newTodoItem, setNewTodoItem] = React.useState<TTodo>({
+  const [newTodoItem, setNewTodoItem] = React.useState<ITodoItem>({
     userID: 0,
     todoID: 0,
     isCompleted: false,

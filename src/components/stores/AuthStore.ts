@@ -53,6 +53,7 @@ class AuthStore {
   signIn = (userName: string, userPassword: string) => {
     const authCredential = getAuthCredentials(userName, userPassword);
     console.log('authCredential:', authCredential);
+    authCredential.userPassword = '';
 
     if (authCredential.isAccessAllowed) {
       localStorage.setItem(
