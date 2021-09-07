@@ -42,8 +42,31 @@ class TodoStore {
   /**
    * Исходный список todo
    */
-  set todoList(data: ITodoItem[]) {
-    this._todoList = data;
+  set todoList(modifiedTodoList: ITodoItem[]) {
+    this.isInEditMode = true;
+
+    console.log('SET TODOLIST', 'CURRENT_TODO_ITEM:', this.currentTodoItem);
+
+    //todo из local storage, за исключением todo текущего пользователя
+    let globalTodoList: ITodoItem[] = JSON.parse(
+      localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
+    ).filter(
+      (todoItem: ITodoItem) => todoItem.userID !== AuthStore.authState.userID
+    );
+
+    //добавляем к todo из local storage измененные todo текущего пользователя
+    globalTodoList = [...globalTodoList, ...modifiedTodoList];
+
+    localStorage.setItem(
+      LOCALSTORAGE_KEYS.KEY_TODO,
+      JSON.stringify(globalTodoList)
+    );
+
+    this.isInEditMode = false;
+    this.currentTodoItem = emptyTodoItem;
+
+    this._todoList = modifiedTodoList;
+    // this._todoList = data;
   }
 
   /**
@@ -126,23 +149,25 @@ class TodoStore {
     //исходный список из localStorage
     this.todoList = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
+    ).filter(
+      (todoItem: ITodoItem) => todoItem.userID === AuthStore.authState.userID
     );
 
     this.filteredTodoList = this.todoList;
 
-    this.filterByUserID();
+    //this.filterByUserID();
     this.filterBySearchValue();
     this.sortBySortValue();
   };
 
-  /**
-   * Фильтрация списка todo по ID пользователя
-   */
-  filterByUserID = () => {
-    this.filteredTodoList = this.filteredTodoList.filter(
-      (todoItem) => todoItem.userID === AuthStore.authState.userID
-    );
-  };
+  // /**
+  //  * Фильтрация списка todo по ID пользователя
+  //  */
+  // filterByUserID = () => {
+  //   this.filteredTodoList = this.filteredTodoList.filter(
+  //     (todoItem) => todoItem.userID === AuthStore.authState.userID
+  //   );
+  // };
 
   /**
    * Фильтрация списка todo по строке поиска
@@ -231,21 +256,21 @@ class TodoStore {
     this.isInEditMode = true;
     this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
     console.log('TodoStore.removeTodoItem:', id);
-    localStorage.setItem(
-      LOCALSTORAGE_KEYS.KEY_TODO,
-      JSON.stringify(this.todoList)
-    );
+    // localStorage.setItem(
+    //   LOCALSTORAGE_KEYS.KEY_TODO,
+    //   JSON.stringify(this.todoList)
+    // );
 
     this.getTodoList();
-    this.isInEditMode = false;
-    this.currentTodoItem = emptyTodoItem;
+    //this.isInEditMode = false;
+    //this.currentTodoItem = emptyTodoItem;
   };
 
   /**
    * Изменение статуса элемента todo
    */
   changeTodoItemStatus = (id: number) => {
-    this.isInEditMode = true;
+    // this.isInEditMode = true;
 
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === id) {
@@ -255,22 +280,22 @@ class TodoStore {
       }
       return todoItem;
     });
-    localStorage.setItem(
-      LOCALSTORAGE_KEYS.KEY_TODO,
-      JSON.stringify(this.todoList)
-    );
+    // localStorage.setItem(
+    //   LOCALSTORAGE_KEYS.KEY_TODO,
+    //   JSON.stringify(this.todoList)
+    // );
 
-    // this.getTodoList();
-    this.isInEditMode = false;
-    this.currentTodoItem = emptyTodoItem;
+    // // this.getTodoList();
+    // this.isInEditMode = false;
+    // this.currentTodoItem = emptyTodoItem;
   };
 
   /**
    * Изменение текста todo
    */
   changeTodoItemText = (todoItem: ITodoItem, text: string) => {
-    this.isInEditMode = true;
-    this.currentTodoItem = todoItem;
+    // this.isInEditMode = true;
+    // this.currentTodoItem = todoItem;
     console.log('currentEditingTodoItemId:', this.currentTodoItem);
 
     this.todoList = this.todoList.map((todoItem) => {
@@ -280,14 +305,14 @@ class TodoStore {
       return todoItem;
     });
 
-    localStorage.setItem(
-      LOCALSTORAGE_KEYS.KEY_TODO,
-      JSON.stringify(this.todoList)
-    );
+    // localStorage.setItem(
+    //   LOCALSTORAGE_KEYS.KEY_TODO,
+    //   JSON.stringify(this.todoList)
+    // );
 
-    // this.getTodoList();
-    this.isInEditMode = false;
-    this.currentTodoItem = emptyTodoItem;
+    // // this.getTodoList();
+    // this.isInEditMode = false;
+    // this.currentTodoItem = emptyTodoItem;
   };
 }
 
