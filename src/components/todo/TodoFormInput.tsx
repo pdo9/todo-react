@@ -48,7 +48,7 @@ const TodoFormInput: React.FC = () => {
 
     if (newTodoItem.todoText.trim()) {
       TodoStore.changeTodoItemText(
-        TodoStore.currentTodoItem,
+        //TodoStore.currentTodoItem,
         newTodoItem.todoText
       );
       setNewTodoItem({

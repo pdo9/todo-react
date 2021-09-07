@@ -9,12 +9,14 @@ import AuthStore from '../stores/AuthStore';
  */
 const TodoList: React.FC = () => {
   React.useEffect(() => {
+    //TodoStore.getTodoList();
+
     const log = (event: StorageEvent) => {
       console.log(event);
     };
 
     window.addEventListener('storage', log);
-    TodoStore.getTodoList();
+
     return () => {
       window.removeEventListener('storage', log);
     };
@@ -26,22 +28,26 @@ const TodoList: React.FC = () => {
         style={{ textAlign: 'center' }}
       >{`Ваш список заметок, ${AuthStore.authState.userName}:`}</h2>
 
-      {TodoStore.filteredTodoList.map((todoItem, index) => (
-        // TodoStore.todoList.map((todoItem, index) => (
-        <TodoItem
-          key={todoItem.todoID}
-          todoItem={todoItem}
-          onCheckBoxClick={() =>
-            TodoStore.changeTodoItemStatus(todoItem.todoID)
-          }
-          onRemoveButtonClick={() => TodoStore.removeTodoItem(todoItem.todoID)}
-          onTodoItemDoublecClick={() => {
-            TodoStore.currentTodoItem = todoItem;
-            TodoStore.isInEditMode = true;
-          }}
-          serialNumber={index + 1}
-        />
-      ))}
+      {
+        // TodoStore.filteredTodoList.map((todoItem, index) => (
+        TodoStore.todoList.map((todoItem, index) => (
+          <TodoItem
+            key={todoItem.todoID}
+            todoItem={todoItem}
+            onCheckBoxClick={() =>
+              TodoStore.changeTodoItemStatus(todoItem.todoID)
+            }
+            onRemoveButtonClick={() =>
+              TodoStore.removeTodoItem(todoItem.todoID)
+            }
+            onTodoItemDoublecClick={() => {
+              TodoStore.currentTodoItem = todoItem;
+              TodoStore.isInEditMode = true;
+            }}
+            serialNumber={index + 1}
+          />
+        ))
+      }
     </React.Fragment>
   );
 };
