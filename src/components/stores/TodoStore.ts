@@ -30,20 +30,32 @@ class TodoStore {
     makeAutoObservable(this);
   }
 
-  get todoList() {
+  /**
+   * Исходный список todo
+   */
+  get todoList(): ITodoItem[] {
     const data: ITodoItem[] = this._todoList;
     //sort...
     return data;
   }
 
+  /**
+   * Исходный список todo
+   */
   set todoList(data: ITodoItem[]) {
     this._todoList = data;
   }
 
-  get filteredTodoList() {
+  /**
+   * Отфильтрованный список todo
+   */
+  get filteredTodoList(): ITodoItem[] {
     return this._filteredTodoList;
   }
 
+  /**
+   * Отфильтрованный список todo
+   */
   set filteredTodoList(value: ITodoItem[]) {
     this._filteredTodoList = value;
   }
@@ -51,7 +63,7 @@ class TodoStore {
   /**
    * Выбранный для редактирования todoItem
    */
-  get currentTodoItem() {
+  get currentTodoItem(): ITodoItem {
     return this._currentTodoItem;
   }
 
@@ -65,7 +77,7 @@ class TodoStore {
   /**
    * Режим редактирования todoItem
    */
-  get isInEditMode() {
+  get isInEditMode(): boolean {
     return this._isInEditMode;
   }
 
@@ -79,7 +91,7 @@ class TodoStore {
   /**
    * Строка поиска
    */
-  get searchValue() {
+  get searchValue(): string {
     return this._searchValue;
   }
 
@@ -93,7 +105,7 @@ class TodoStore {
   /**
    * Метод сортировки
    */
-  get sortValue() {
+  get sortValue(): string {
     return this._sortValue;
   }
 
