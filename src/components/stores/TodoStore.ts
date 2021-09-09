@@ -18,7 +18,6 @@ const emptyTodoItem: ITodoItem = {
 
 class TodoStore {
   private _todoList: ITodoItem[] = [];
-  //private _filteredTodoList: ITodoItem[] = [];
 
   private _isInEditMode: boolean = false;
   private _currentTodoItem: ITodoItem = emptyTodoItem;
@@ -34,6 +33,8 @@ class TodoStore {
    * Исходный список todo
    */
   get todoList(): ITodoItem[] {
+    console.log('filterValue:', this.searchValue, 'sortValue:', this.sortValue);
+
     let filteredTodoList: ITodoItem[] = this.filterBySearchValue(
       this._todoList
     );
@@ -47,7 +48,7 @@ class TodoStore {
    * Исходный список todo
    */
   set todoList(modifiedTodoList: ITodoItem[]) {
-    this.isInEditMode = true;
+    // this.isInEditMode = true;
 
     console.log('SET TODOLIST', 'CURRENT_TODO_ITEM:', this.currentTodoItem);
 
@@ -71,20 +72,6 @@ class TodoStore {
 
     this._todoList = modifiedTodoList;
   }
-
-  // /**
-  //  * Отфильтрованный список todo
-  //  */
-  // get filteredTodoList(): ITodoItem[] {
-  //   return this._filteredTodoList;
-  // }
-
-  // /**
-  //  * Отфильтрованный список todo
-  //  */
-  // set filteredTodoList(value: ITodoItem[]) {
-  //   this._filteredTodoList = value;
-  // }
 
   /**
    * Выбранный для редактирования todoItem
@@ -143,46 +130,19 @@ class TodoStore {
   }
 
   /**
-   * Получение списка todo
+   * Получение исходного списка из localStorage, отфильтрованного по ID текущего пользователя
    */
   getTodoList = () => {
-    console.log('filterValue:', this.searchValue);
-    console.log('sortValue:', this.sortValue);
-
-    //исходный список из localStorage, отфильтрованный по ID текущего пользователя
     this.todoList = JSON.parse(
       localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
     ).filter(
       (todoItem: ITodoItem) => todoItem.userID === AuthStore.authState.userID
     );
-
-    //this.filteredTodoList = this.filterBySearchValue(this.todoList);
-
-    // //this.filterByUserID();
-    // this.filterBySearchValue();
-    // this.sortBySortValue();
   };
-
-  // /**
-  //  * Фильтрация списка todo по ID пользователя
-  //  */
-  // filterByUserID = () => {
-  //   this.filteredTodoList = this.filteredTodoList.filter(
-  //     (todoItem) => todoItem.userID === AuthStore.authState.userID
-  //   );
-  // };
 
   /**
    * Фильтрация списка todo по строке поиска
    */
-  // filterBySearchValue = () => {
-  //   if (this.searchValue) {
-  //     this.filteredTodoList = this.filteredTodoList.filter((todoItem) =>
-  //       todoItem.todoText.includes(this.searchValue)
-  //     );
-  //   }
-  //   console.log('this.filteredTodoList.length:', this.filteredTodoList.length);
-  // };
   filterBySearchValue = (todoList: ITodoItem[]): ITodoItem[] => {
     if (this.searchValue) {
       todoList = todoList.filter((todoItem) =>
@@ -197,60 +157,6 @@ class TodoStore {
   /**
    * Сортировка выбранным методом
    */
-  // sortBySortValue = () => {
-  //   if (this.sortValue) {
-  //     switch (this.sortValue) {
-  //       case SORT_KEYS.DATE_ASC:
-  //         this.filteredTodoList.sort();
-  //         break;
-
-  //       case SORT_KEYS.DATE_DESC:
-  //         this.filteredTodoList.reverse();
-  //         break;
-
-  //       case SORT_KEYS.LOCALECOMPARE_ASC:
-  //         this.filteredTodoList.sort((a, b) =>
-  //           a.todoText.localeCompare(b.todoText)
-  //         );
-  //         break;
-
-  //       case SORT_KEYS.LOCALECOMPARE_DESC:
-  //         this.filteredTodoList.sort((a, b) =>
-  //           b.todoText.localeCompare(a.todoText)
-  //         );
-  //         break;
-
-  //       case SORT_KEYS.IS_COMPLETED_ASC:
-  //         this.filteredTodoList.sort((a, b) => {
-  //           if (a.isCompleted) {
-  //             return -1;
-  //           }
-  //           if (b.isCompleted) {
-  //             return 1;
-  //           }
-  //           return 0;
-  //         });
-  //         break;
-
-  //       case SORT_KEYS.IS_COMPLETED_DESC:
-  //         this.filteredTodoList.sort((a, b) => {
-  //           if (a.isCompleted) {
-  //             return 1;
-  //           }
-  //           if (b.isCompleted) {
-  //             return -1;
-  //           }
-  //           return 0;
-  //         });
-  //         break;
-
-  //       default:
-  //         break;
-  //     }
-  //   }
-
-  //   // console.log('this.filteredTodoList - sort:', this.filteredTodoList);
-  // };
   sortBySortValue = (todoList: ITodoItem[]): ITodoItem[] => {
     let sortedTodoList = todoList;
 
@@ -305,7 +211,6 @@ class TodoStore {
       }
     }
 
-    // console.log('this.filteredTodoList - sort:', this.filteredTodoList);
     return sortedTodoList;
   };
 
@@ -326,11 +231,7 @@ class TodoStore {
    * Удаление элемента todo
    */
   removeTodoItem = (id: number) => {
-    this.isInEditMode = true;
     this.todoList = this.todoList.filter((todoItem) => todoItem.todoID !== id);
-    console.log('TodoStore.removeTodoItem:', id);
-
-    this.getTodoList();
   };
 
   /**
@@ -339,9 +240,7 @@ class TodoStore {
   changeTodoItemStatus = (id: number) => {
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === id) {
-        console.log('BEFORE TodoStore.changeTodoItemStatus:', todoItem);
         todoItem.isCompleted = !todoItem.isCompleted;
-        console.log('AFTER TodoStore.changeTodoItemStatus:', todoItem);
       }
       return todoItem;
     });
@@ -350,9 +249,7 @@ class TodoStore {
   /**
    * Изменение текста todo
    */
-  changeTodoItemText = (/*todoItem: ITodoItem,*/ text: string) => {
-    console.log('currentEditingTodoItemId:', this.currentTodoItem);
-
+  changeTodoItemText = (text: string) => {
     this.todoList = this.todoList.map((todoItem) => {
       if (todoItem.todoID === this.currentTodoItem.todoID) {
         todoItem.todoText = text;
