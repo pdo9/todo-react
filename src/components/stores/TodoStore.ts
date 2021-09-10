@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { LOCALSTORAGE_KEYS, SORT_KEYS } from '../utils/constants';
 import AuthStore from '../stores/AuthStore';
+import { wait } from '../utils/utils';
 
 export interface ITodoItem {
   userID: number;
@@ -25,6 +26,10 @@ class TodoStore {
   private _searchValue: string = '';
   private _sortValue: string = '';
 
+  isTodoListLoading: boolean = false;
+
+  error: string = '';
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -33,7 +38,7 @@ class TodoStore {
    * Исходный список todo
    */
   get todoList(): ITodoItem[] {
-    console.log('filterValue:', this.searchValue, 'sortValue:', this.sortValue);
+    // console.log('filterValue:', this.searchValue, 'sortValue:', this.sortValue);
 
     let filteredTodoList: ITodoItem[] = this.filterBySearchValue(
       this._todoList
@@ -49,8 +54,6 @@ class TodoStore {
    */
   set todoList(modifiedTodoList: ITodoItem[]) {
     // this.isInEditMode = true;
-
-    console.log('SET TODOLIST', 'CURRENT_TODO_ITEM:', this.currentTodoItem);
 
     //todo из local storage, за исключением todo текущего пользователя
     let globalTodoList: ITodoItem[] = JSON.parse(
@@ -129,15 +132,32 @@ class TodoStore {
     this._sortValue = value;
   }
 
+  setIsTodoListLoading = (isLoading: boolean) => {
+    this.isTodoListLoading = isLoading;
+  };
+
   /**
    * Получение исходного списка из localStorage, отфильтрованного по ID текущего пользователя
    */
-  getTodoList = () => {
-    this.todoList = JSON.parse(
-      localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
-    ).filter(
-      (todoItem: ITodoItem) => todoItem.userID === AuthStore.authState.userID
-    );
+  getTodoList = async () => {
+    this.setIsTodoListLoading(true);
+    console.log('BEFORE this.isTodoListLoading:', this.isTodoListLoading);
+
+    try {
+      await wait(2000);
+
+      this.todoList = JSON.parse(
+        localStorage.getItem(LOCALSTORAGE_KEYS.KEY_TODO) || '[]'
+      ).filter(
+        (todoItem: ITodoItem) => todoItem.userID === AuthStore.authState.userID
+      );
+    } catch (err: any) {
+      this.error = `Ошибка получения списка todo: \n${err}`;
+      console.error(this.error);
+    } finally {
+      this.setIsTodoListLoading(false);
+      console.log('AFTER this.isTodoListLoading:', this.isTodoListLoading);
+    }
   };
 
   /**
@@ -149,7 +169,6 @@ class TodoStore {
         todoItem.todoText.includes(this.searchValue)
       );
     }
-    console.log('SEARCH: todoList.length:', todoList.length);
 
     return todoList;
   };

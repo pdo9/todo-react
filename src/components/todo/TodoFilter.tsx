@@ -12,16 +12,15 @@ const TodoFilter = () => {
   const searchHandler = (event: any): void => {
     //event.preventDefault();
     TodoStore.searchValue = event.target.value;
-    console.log('searchHandler', TodoStore.searchValue);
+    // console.log('searchHandler', TodoStore.searchValue);
   };
 
   const sortHandler = (event: any): void => {
     TodoStore.sortValue = event.target.value;
-    console.log('sortHandler');
+    // console.log('sortHandler');
   };
 
   const resetFiltres = () => {
-    console.log('reset filters');
     TodoStore.searchValue = '';
     TodoStore.sortValue = '';
   };

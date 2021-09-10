@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { getAuthCredentials } from '../services/authService';
 import { LOCALSTORAGE_KEYS } from '../utils/constants';
+import { wait } from '../utils/utils';
 
 /**
  * Описание учетных данных авторизации
@@ -20,6 +21,7 @@ const authStateEmpty: IAuthCredential = {
   userID: -1,
   userName: '',
   userPassword: '',
+  onAccessDeniedMessage: '',
 };
 
 /**
@@ -31,9 +33,15 @@ class AuthStore {
    */
   authState: IAuthCredential = authStateEmpty;
 
+  isAuthChecking: boolean = false;
+
   constructor() {
     makeAutoObservable(this);
   }
+
+  setIsAuthChecking = (isChecking: boolean) => {
+    this.isAuthChecking = isChecking;
+  };
 
   /**
    * Возвращает текущее состоянии авторизации
@@ -50,20 +58,34 @@ class AuthStore {
    * @param userName Имя пользователя
    * @param userPassword Пароль пользователя
    */
-  signIn = (userName: string, userPassword: string) => {
-    const authCredential = getAuthCredentials(userName, userPassword);
-    console.log('authCredential:', authCredential);
-    authCredential.userPassword = '';
+  signIn = async (userName: string, userPassword: string) => {
+    try {
+      this.setIsAuthChecking(true);
+      this.authState = authStateEmpty;
 
-    if (authCredential.isAccessAllowed) {
-      localStorage.setItem(
-        LOCALSTORAGE_KEYS.KEY_AUTH,
-        JSON.stringify(authCredential)
+      await wait(2000);
+
+      const authCredential: IAuthCredential = getAuthCredentials(
+        userName,
+        userPassword
       );
-      this.getAuthState();
-    } else {
-      this.authState.onAccessDeniedMessage =
-        'Доступ запрещен. Проверьте правильность ввода имени пользователя и пароля.';
+
+      authCredential.userPassword = '';
+
+      if (authCredential.isAccessAllowed) {
+        localStorage.setItem(
+          LOCALSTORAGE_KEYS.KEY_AUTH,
+          JSON.stringify(authCredential)
+        );
+        this.getAuthState();
+      } else {
+        this.authState.onAccessDeniedMessage =
+          'Доступ запрещен. Проверьте правильность ввода имени пользователя и пароля.';
+      }
+    } catch (error) {
+      console.error(`Ошибка при авторизации: \n${error}`);
+    } finally {
+      this.setIsAuthChecking(false);
     }
   };
 

@@ -26,27 +26,36 @@ const Login: React.FC = () => {
           {AuthStore.authState.onAccessDeniedMessage}
         </h2>
       )}
-      <form onSubmit={loginHandler}>
-        <h2>Вам необходимо авторизоваться:</h2>
-        <CustomInput
-          type='text'
-          placeholder='Введите имя пользователя'
-          onChange={(event) => setUserName(event.target.value.trim())}
-        />
-        <CustomInput
-          type='password'
-          placeholder='Введите пароль'
-          onChange={(event) => setUserPassword(event.target.value)}
-        />
-        <p>
-          <CustomButton
-            style={{ height: '40px', width: '100px' }}
-            type='submit'
-          >
-            Вход
-          </CustomButton>
-        </p>
-      </form>
+      {AuthStore.isAuthChecking ? (
+        <div>
+          <p>Авторизация...</p>
+        </div>
+      ) : (
+        <form onSubmit={loginHandler}>
+          <h2>Вам необходимо авторизоваться:</h2>
+
+          <div>
+            <CustomInput
+              type='text'
+              placeholder='Введите имя пользователя'
+              onChange={(event) => setUserName(event.target.value.trim())}
+            />
+            <CustomInput
+              type='password'
+              placeholder='Введите пароль'
+              onChange={(event) => setUserPassword(event.target.value)}
+            />
+            <p>
+              <CustomButton
+                style={{ height: '40px', width: '100px' }}
+                type='submit'
+              >
+                Вход
+              </CustomButton>
+            </p>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
